@@ -2,27 +2,23 @@ from tkinter import *
 import rospy
 from std_msgs.msg import String
 
-# Callback function to update the label text
 def callback(msg):
     ros_label.config(text=msg.data)
 
 def publish_on_topic():
-    test_publisher.publish("Hello World")
+    test_publisher.publish("x: " + x_entry.get() + " y: " + y_entry.get() + " z: " + z_entry.get())
+    x_entry.delete(0, 'end')
+    y_entry.delete(0, 'end')
+    z_entry.delete(0, 'end')
 
 # Initialize the ROS node and subscriber
 rospy.init_node('gui', anonymous=True)
 rospy.Subscriber("/response", String, callback)
 test_publisher = rospy.Publisher("/chatter", String, queue_size=10)
 
-from tkinter import *
-import rospy
-from std_msgs.msg import String
-
-# ... (rest of your code, including callback, publish_on_topic, and ROS initialization)
-
 # Initialize the Tkinter GUI
 gui = Tk()
-gui.geometry('1440x800')
+gui.geometry('1400x700')
 
 left_frame = Frame(gui)
 right_frame = Frame(gui)
@@ -69,11 +65,10 @@ z_entry = Entry(entry_frame, width=7, bg="#4278f5")
 
 ros_label.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
 send_button.grid(row=2, column=0, padx=10, pady=10, sticky="sew")
-entry_frame.grid(row=1, column=0, sticky="ew")  # Span full width of left_frame
-x_entry.grid(row=0, column=0, sticky="ew", padx=5)  # sticky="ew" to expand horizontally
-y_entry.grid(row=0, column=1, sticky="ew", padx=5)
-z_entry.grid(row=0, column=2, sticky="ew", padx=5)
-
+entry_frame.grid(row=1, column=0, sticky="sew")  # Span full width of left_frame
+x_entry.grid(row=0, column=0, sticky="sew", padx=5)  # sticky="ew" to expand horizontally
+y_entry.grid(row=0, column=1, sticky="sew", padx=5)
+z_entry.grid(row=0, column=2, sticky="sew", padx=5)
 
 #RIGHT SIDE
 
@@ -81,5 +76,6 @@ right_label = Label(right_frame, text="Right Side Content")
 test_button = Button(right_frame, text="Test")
 right_label.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
 test_button.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
+
 
 gui.mainloop()

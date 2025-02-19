@@ -1,0 +1,8 @@
+<launch>
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    </include>
+
+    <node name="gui_talker" pkg="printing_station" type="inspection_talker_gui">
+    </node>
+</launch>

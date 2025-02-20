@@ -8,7 +8,8 @@ This project implements a robot station for automated 3D printing in a productio
 * **Robot Manipulation:** A robotic arm, controlled through ROS, is used to unload the printed objects from the printers.
 * **Vision System:**
 
-## Functional Description (ROS Perspective)
+## Functional Description
+![Flow Chart of the ROS Nodes](docs/flowchart/flowchart.png)
 
 
 ## Hardware Components

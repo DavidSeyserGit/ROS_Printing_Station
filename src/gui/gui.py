@@ -6,6 +6,18 @@ def callback(msg):
     ros_label.config(text=msg.data)
 
 def publish_on_topic():
+    """
+    @brief Publishes coordinates on a ROS topic and clears the input fields.
+    
+    This function retrieves the values from the x_entry, y_entry, and z_entry input fields,
+    concatenates them into a single string in the format "x: <value> y: <value> z: <value>",
+    and publishes this string on a predefined ROS topic using the test_publisher. After publishing,
+    it clears the input fields.
+    
+    @param None
+    
+    @return None
+    """
     test_publisher.publish("x: " + x_entry.get() + " y: " + y_entry.get() + " z: " + z_entry.get())
     x_entry.delete(0, 'end')
     y_entry.delete(0, 'end')

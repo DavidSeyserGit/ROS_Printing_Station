@@ -1,0 +1,33 @@
+<launch>
+    <!-- Spawn the first model -->
+    <group ns="stand1">
+        <param name="robot_description" command="$(find xacro)/xacro '$(find printing_station)/urdf/inspection_bot/printer_stand.urdf'"/>
+        <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
+              args="-urdf -param robot_description
+                    -x 0.0 -y 0.0 -z 0.0
+                    -Y 0.0
+                    -model stand1"/>
+    </group>
+
+    <!-- Spawn the second model -->
+    <group ns="stand2">
+        <param name="robot_description" command="$(find xacro)/xacro '$(find printing_station)/urdf/inspection_bot/printer_stand.urdf'"/>
+        <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
+              args="-urdf -param robot_description
+                    -x 1.0 -y 1.0 -z 1.0
+                    -Y 0.0
+                    -model stand2"/>
+    </group>
+
+    <!-- Spawn additional models as needed -->
+    <!-- Example: Spawn a third model -->
+    <group ns="stand3">
+        <param name="robot_description" command="$(find xacro)/xacro '$(find printing_station)/urdf/abb_irb2400_support/urdf/irb2400.urdf'"/>
+        <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
+              args="-urdf -param robot_description
+                    -x 2.0 -y 2.0 -z 2.0
+                    -Y 0.0
+                    -model stand3"/>
+    </group>
+
+</launch>

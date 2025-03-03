@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.3)
 
-project(Knickarmroboter_URDF)
+project(URDF_Knickarmroboter)
 
 find_package(catkin REQUIRED)
 

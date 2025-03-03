@@ -3,21 +3,21 @@
      Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot
-  name="Knickarmroboter_URDF">
+  name="URDF_Knickarmroboter">
   <link
     name="base_link">
     <inertial>
       <origin
-        xyz="5.20417042793042E-18 2.16840434497101E-18 0.0366619424385133"
+        xyz="3.46944695195361E-18 2.16840434497101E-18 0.0366619424385135"
         rpy="0 0 0" />
       <mass
         value="1.98151152753041" />
       <inertia
         ixx="0.00564498748918672"
-        ixy="9.3231526840852E-19"
-        ixz="-3.93933558135497E-19"
+        ixy="9.42142044041064E-19"
+        ixz="-3.94698883470848E-19"
         iyy="0.00564498748918672"
-        iyz="2.33058266314758E-19"
+        iyz="2.22435497644666E-19"
         izz="0.00917479759671224" />
     </inertial>
     <visual>
@@ -26,7 +26,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Knickarmroboter_URDF/meshes/base_link.STL" />
+          filename="package://URDF_Knickarmroboter/meshes/base_link.STL" />
       </geometry>
       <material
         name="">
@@ -40,7 +40,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Knickarmroboter_URDF/meshes/base_link.STL" />
+          filename="package://URDF_Knickarmroboter/meshes/base_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -48,16 +48,16 @@
     name="l1">
     <inertial>
       <origin
-        xyz="0.00342875009837332 2.27896488612911E-05 0.151455208228251"
+        xyz="0.00342875009837332 2.27896488612927E-05 0.151455208228251"
         rpy="0 0 0" />
       <mass
         value="3.58989007226229" />
       <inertia
         ixx="0.0127414440292874"
-        ixy="-6.28399707264981E-05"
-        ixz="-1.36727019490895E-05"
+        ixy="-6.2839970726499E-05"
+        ixz="-1.36727019490912E-05"
         iyy="0.0221912830770801"
-        iyz="-7.10942461212701E-08"
+        iyz="-7.10942461203049E-08"
         izz="0.02283593921742" />
     </inertial>
     <visual>
@@ -66,7 +66,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Knickarmroboter_URDF/meshes/l1.STL" />
+          filename="package://URDF_Knickarmroboter/meshes/l1.STL" />
       </geometry>
       <material
         name="">
@@ -80,7 +80,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Knickarmroboter_URDF/meshes/l1.STL" />
+          filename="package://URDF_Knickarmroboter/meshes/l1.STL" />
       </geometry>
     </collision>
   </link>
@@ -112,8 +112,8 @@
         value="2.15458853713248" />
       <inertia
         ixx="0.0290442398985364"
-        ixy="3.96664810255086E-06"
-        ixz="-0.000292699380136223"
+        ixy="3.96664810255087E-06"
+        ixz="-0.000292699380136224"
         iyy="0.0277340010742162"
         iyz="-0.000419192292398604"
         izz="0.00307125334814805" />
@@ -124,7 +124,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Knickarmroboter_URDF/meshes/l2.STL" />
+          filename="package://URDF_Knickarmroboter/meshes/l2.STL" />
       </geometry>
       <material
         name="">
@@ -138,7 +138,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Knickarmroboter_URDF/meshes/l2.STL" />
+          filename="package://URDF_Knickarmroboter/meshes/l2.STL" />
       </geometry>
     </collision>
   </link>
@@ -182,7 +182,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Knickarmroboter_URDF/meshes/l3.STL" />
+          filename="package://URDF_Knickarmroboter/meshes/l3.STL" />
       </geometry>
       <material
         name="">
@@ -196,7 +196,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Knickarmroboter_URDF/meshes/l3.STL" />
+          filename="package://URDF_Knickarmroboter/meshes/l3.STL" />
       </geometry>
     </collision>
   </link>
@@ -228,11 +228,11 @@
         value="1.0036372704856" />
       <inertia
         ixx="0.00172341040408688"
-        ixy="8.39263450547564E-07"
+        ixy="8.39263450547596E-07"
         ixz="5.30763511552947E-05"
         iyy="0.00434352436051975"
         iyz="3.14985535414815E-05"
-        izz="0.00527114996029661" />
+        izz="0.00527114996029662" />
     </inertial>
     <visual>
       <origin
@@ -240,7 +240,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Knickarmroboter_URDF/meshes/l4.STL" />
+          filename="package://URDF_Knickarmroboter/meshes/l4.STL" />
       </geometry>
       <material
         name="">
@@ -254,7 +254,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Knickarmroboter_URDF/meshes/l4.STL" />
+          filename="package://URDF_Knickarmroboter/meshes/l4.STL" />
       </geometry>
     </collision>
   </link>
@@ -280,17 +280,17 @@
     name="l5">
     <inertial>
       <origin
-        xyz="0.49845844167894 0.00058921978345357 0.460442294674364"
+        xyz="0.49845844167894 0.000589219783453568 0.460442294674364"
         rpy="0 0 0" />
       <mass
         value="0.283355917359441" />
       <inertia
         ixx="0.000971920993625608"
-        ixy="2.52561899965769E-06"
-        ixz="-7.72658676268279E-06"
+        ixy="2.52561899965772E-06"
+        ixz="-7.72658676268277E-06"
         iyy="0.000881887915611142"
         iyz="0.000104935273774506"
-        izz="0.000454277898377059" />
+        izz="0.000454277898377058" />
     </inertial>
     <visual>
       <origin
@@ -298,7 +298,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Knickarmroboter_URDF/meshes/l5.STL" />
+          filename="package://URDF_Knickarmroboter/meshes/l5.STL" />
       </geometry>
       <material
         name="">
@@ -312,7 +312,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Knickarmroboter_URDF/meshes/l5.STL" />
+          filename="package://URDF_Knickarmroboter/meshes/l5.STL" />
       </geometry>
     </collision>
   </link>
@@ -344,7 +344,7 @@
         value="0.151417252536961" />
       <inertia
         ixx="0.000109796391461088"
-        ixy="-2.94419371801066E-06"
+        ixy="-2.94419371801065E-06"
         ixz="7.29633093183952E-06"
         iyy="6.47550498106707E-05"
         iyz="1.14162970646975E-06"
@@ -356,7 +356,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Knickarmroboter_URDF/meshes/l6.STL" />
+          filename="package://URDF_Knickarmroboter/meshes/l6.STL" />
       </geometry>
       <material
         name="">
@@ -370,7 +370,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://Knickarmroboter_URDF/meshes/l6.STL" />
+          filename="package://URDF_Knickarmroboter/meshes/l6.STL" />
       </geometry>
     </collision>
   </link>

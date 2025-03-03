@@ -1,7 +1,7 @@
 <launch>
     <!-- Spawn the first model -->
     <group ns="robot">
-        <param name="robot_description" command="$(find xacro)/xacro '$(find printing_station)/urdf/inspection_bot/robot.urdf'"/>
+        <param name="robot_description" command="$(find xacro)/xacro '$(find printing_station)/urdf/Knickarmroboter_URDF.SLDASM/urdf/Knickarmroboter_URDF.SLDASM.urdf'"/>
         <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
               args="-urdf -param robot_description
                         -x 0.0 -y 0.0 -z 0.0

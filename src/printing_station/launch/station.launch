@@ -4,5 +4,5 @@
     <include file="$(find printing_station)/launch/platform.launch"/>
 
     <!-- Launch the GUI talker node -->
-    <node name="gui_talker" pkg="printing_station" type="inspection_talker_gui"/>
+    <node name="gui_talker" pkg="printing_station" type="picking_bot_talker"/>
 </launch>

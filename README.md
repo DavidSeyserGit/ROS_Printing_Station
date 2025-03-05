@@ -1,5 +1,10 @@
 # Robot Station for 3D Printing with Vision Detection
 
+![Python](https://img.shields.io/badge/Python-3.8-blue.svg)
+![C++](https://img.shields.io/badge/C++-17-blue.svg)
+![ROS](https://img.shields.io/badge/ROS-Noetic-blue.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+
 ## Overview
 
 This project implements a robot station for automated 3D printing in a production environment, leveraging the Robot Operating System (ROS) for seamless integration and control. The station integrates a vision detection system to optimize the printing process and enhance efficiency.  The core components of the station, all managed within the ROS framework, are:
@@ -8,7 +13,8 @@ This project implements a robot station for automated 3D printing in a productio
 * **Robot Manipulation:** A robotic arm, controlled through ROS, is used to unload the printed objects from the printers.
 * **Vision System:**
 
-## Functional Description (ROS Perspective)
+## Functional Description
+![Flow Chart of the ROS Nodes](docs/flowchart/flowchart.png){ width=70% }
 
 
 ## Hardware Components

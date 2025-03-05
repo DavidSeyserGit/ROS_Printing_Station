@@ -1,21 +1,8 @@
 <launch>
-    <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    </include>
+    <!-- Include the empty world launch file -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+    <include file="$(find printing_station)/launch/platform.launch"/>
 
-    <arg name="model" default="cylinder" doc="Name of the robot model"/>
-    <arg name="x" default="0.0" doc="X position for the robot"/>
-    <arg name="y" default="0.0" doc="Y position for the robot"/>
-    <arg name="z" default="0.0" doc="Z position for the robot"/>
-    <arg name="yaw" default="0.0" doc="Yaw orientation for the robot"/>
-
-    <param name="robot_description" command="$(find xacro)/xacro '$(find printing_station)/urdf/inspection_bot/robot.urdf'" /> 
-
-    <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
-          args="-urdf -param robot_description
-                -x $(arg x) -y $(arg y) -z $(arg z)
-                -Y $(arg yaw)
-                -model $(arg model)"/>
-
-    <node name="gui_talker" pkg="printing_station" type="inspection_talker_gui">
-    </node>
+    <!-- Launch the GUI talker node -->
+    <node name="gui_talker" pkg="printing_station" type="inspection_talker_gui"/>
 </launch>

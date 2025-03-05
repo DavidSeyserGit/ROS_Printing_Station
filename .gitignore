@@ -2,3 +2,6 @@
 /devel
 /.vscode
 .catkin_workspace
+/docs/html
+/docs/latex
+/site

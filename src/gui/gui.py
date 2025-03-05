@@ -1,95 +1,93 @@
-from PySide6.QtWidgets import (QApplication, QMainWindow, QVBoxLayout, QHBoxLayout, QWidget, QLabel,
-                                 QPushButton, QTextEdit)
-from PySide6.QtCore import Qt, QSize
-from PySide6.QtGui import QPixmap, QPainter, QColor
+from tkinter import *
 import rospy
 from std_msgs.msg import String
 
-class GUI(QMainWindow):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("Printing GUI")
-        self.setGeometry(0, 0, 800, 500)  # Widened window for two systems
+def callback(msg):
+    ros_label.config(text=msg.data)
 
-        rospy.init_node("GUI", anonymous=True)
+def publish_on_topic():
+    """
+    @brief Publishes coordinates on a ROS topic and clears the input fields.
+    
+    This function retrieves the values from the x_entry, y_entry, and z_entry input fields,
+    concatenates them into a single string in the format "x: <value> y: <value> z: <value>",
+    and publishes this string on a predefined ROS topic using the test_publisher. After publishing,
+    it clears the input fields.
+    
+    @param None
+    
+    @return None
+    """
+    test_publisher.publish("x: " + x_entry.get() + " y: " + y_entry.get() + " z: " + z_entry.get())
+    x_entry.delete(0, 'end')
+    y_entry.delete(0, 'end')
+    z_entry.delete(0, 'end')
 
-        # ROS Publishers
-        self.inspector_pub = rospy.Publisher("/chatter", String, queue_size=10)
-        self.picker_pub = rospy.Publisher("/chatter", String, queue_size=10)
-        rospy.Subscriber("/response", String, self.update_inspector_status)  # New subscriber
-        
-        
-        self.central_widget = QWidget()
-        self.setCentralWidget(self.central_widget)
+# Initialize the ROS node and subscriber
+rospy.init_node('gui', anonymous=True)
+rospy.Subscriber("/response", String, callback)
+test_publisher = rospy.Publisher("/chatter", String, queue_size=10)
 
-        # Main Horizontal Layout
-        main_layout = QHBoxLayout()
+# Initialize the Tkinter GUI
+gui = Tk()
+gui.geometry('1400x700')
 
-        # System 1 Layout (Left Side)
-        inspector = QVBoxLayout()
-        self.inspector_status_label = QLabel()
-        self.set_status_color("yellow")  # Initial color
-        self.inspector_send = QPushButton("Send Inspetor")
-        self.inspector_send.clicked.connect(self.send_move_command_inspector)
-        
-        
-        inspector.addWidget(QLabel("Inspector Robot"))
-        inspector.addWidget(QLabel(""))
-        inspector.addWidget(self.inspector_status_label)
-        inspector.addWidget(self.inspector_send)
+left_frame = Frame(gui)
+right_frame = Frame(gui)
+
+gui.grid_columnconfigure(0, weight=1)
+gui.grid_columnconfigure(1, weight=1)
+gui.grid_rowconfigure(0, weight=1)
+
+left_frame = Frame(gui, bg="#181818")
+right_frame = Frame(gui, bg="#181818")
+
+left_frame.grid(row=0, column=0, sticky="nsew")
+right_frame.grid(row=0, column=1, sticky="nsew")
+
+# Configure rows and columns within the frames for even distribution
+left_frame.grid_rowconfigure(0, weight=1)  # Label
+left_frame.grid_rowconfigure(1, weight=1)  # Button
+left_frame.grid_rowconfigure(2, weight=1)  # Entries Row
+left_frame.grid_columnconfigure(0, weight=1) # All columns in left frame
+
+right_frame.grid_rowconfigure(0, weight=1)
+right_frame.grid_columnconfigure(0, weight=1)
+right_frame.grid_columnconfigure(1, weight=1)
+right_frame.grid_columnconfigure(2, weight=1)
+
+left_frame.grid_propagate(False)
+right_frame.grid_propagate(False)
+
+#LEFT SIDE
+
+ros_label = Label(left_frame, text="Hello")
+send_button = Button(left_frame, text="Send", command=publish_on_topic)
+
+# Use a separate frame for the entry widgets to manage their layout
+entry_frame = Frame(left_frame, bg="#181818")
+entry_frame.grid_columnconfigure(0, weight=1) # Distribute space in entry frame
+entry_frame.grid_columnconfigure(1, weight=1)
+entry_frame.grid_columnconfigure(2, weight=1)
+
+x_entry = Entry(entry_frame, width=7, bg="#f54242")
+y_entry = Entry(entry_frame, width=7, bg="#75f542")
+z_entry = Entry(entry_frame, width=7, bg="#4278f5")
 
 
-        # System 2 Layout (Right Side)
-        picker = QVBoxLayout()
-        self.picker_send = QPushButton("Send Picker")
-        self.picker_send.clicked.connect(self.send_move_command_picker)
-        
-        picker.addWidget(QLabel("Picker Robot"))
-        picker.addWidget(QLabel(""))
-        picker.addWidget(QLabel(""))
-        picker.addWidget(self.picker_send)
+ros_label.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
+send_button.grid(row=2, column=0, padx=10, pady=10, sticky="sew")
+entry_frame.grid(row=1, column=0, sticky="sew")  # Span full width of left_frame
+x_entry.grid(row=0, column=0, sticky="sew", padx=5)  # sticky="ew" to expand horizontally
+y_entry.grid(row=0, column=1, sticky="sew", padx=5)
+z_entry.grid(row=0, column=2, sticky="sew", padx=5)
 
-        # Add both systems to main layout
-        main_layout.addLayout(inspector)
-        main_layout.addLayout(picker)
-        self.central_widget.setLayout(main_layout)
+#RIGHT SIDE
 
-    def send_move_command_inspector(self):
-        msg = String()
-        msg.data = "Hello from Inspector"
-        self.inspector_pub.publish(msg)
+right_label = Label(right_frame, text="Right Side Content")
+test_button = Button(right_frame, text="Test")
+right_label.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
+test_button.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
 
-    def send_move_command_picker(self):
-        msg = String()
-        msg.data = "Hello from Picker"
-        self.picker_pub.publish(msg)
 
-    def update_inspector_status(self, msg):
-        status = msg.data
-        self.set_status_color(status)
-
-    def set_status_color(self, color_name):
-        size = QSize(50, 50)  # Size of the dot
-        pixmap = QPixmap(size)
-        pixmap.fill(Qt.transparent)  # Make background transparent
-
-        painter = QPainter(pixmap)
-        if color_name.lower() == "green":
-            color = QColor(0, 255, 0)  # Green
-        elif color_name.lower() == "red":
-            color = QColor(255, 0, 0)  # Red
-        elif color_name.lower() == "yellow":
-            color = QColor(255, 255, 0)  # Yellow
-        else:
-            color = QColor(128, 128, 128) # Gray (Default/Unknown)
-
-        painter.setBrush(color)
-        painter.drawEllipse(10, 10, 30, 30)  # Draw the filled circle
-        painter.end()
-
-        self.inspector_status_label.setPixmap(pixmap)
-if __name__ == "__main__":
-    app = QApplication()
-    window = GUI()
-    window.show()
-    app.exec()
+gui.mainloop()

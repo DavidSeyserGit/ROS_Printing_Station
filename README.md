@@ -22,9 +22,15 @@ This project implements a robot station for automated 3D printing in a productio
 * **Robot Arm:** 
 * **Vision System:** 
 
-## Software Components (ROS-focused)
+## Software Components
+This Porject requires ROS Noetic to be install on your system. For a detailed guide on how to install ROS please use the ROS Wiki. [ROS-Wiki](https://wiki.ros.org/noetic/Installation)
 
+### GUI
+The GUI is written in Python, to include all neccesarry python packages please use the requirements.txt file. 
 
+   ```bash
+   pip install -r requirments.txt
+   ```
 ## ROS Nodes
 
 ## Build Instructions (ROS-specific)
@@ -35,5 +41,5 @@ This project implements a robot station for automated 3D printing in a productio
    ```bash
    sudo apt-get update  # Update package list
    rosdep install --from-paths src --ignore-src -r -y
-
+   ```
 ## This is for a Course in the Master Robotics Engineering at UAS Technikum Wien

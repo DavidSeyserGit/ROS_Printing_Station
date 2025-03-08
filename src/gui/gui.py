@@ -1,42 +1,48 @@
 from tkinter import *
 import rospy
 from std_msgs.msg import String
+from sensor_msgs.msg import Image
+from PIL import Image as PIL_Image
+from PIL import ImageTk
+import cv2
+from cv_bridge import CvBridge
 
 class ROSGUI:
     def __init__(self, master):
         self.master = master
-        master.geometry('1400x700')
+        master.geometry('1000x700')  # Adjust width
 
         # Initialize ROS node and subscriber
         rospy.init_node('gui', anonymous=True)
         rospy.Subscriber("/response", String, self.callback)
+        rospy.Subscriber("/image_raw", Image, self.image_callback)
         self.test_publisher = rospy.Publisher("/chatter", String, queue_size=10)
+        self.bridge = CvBridge()
+        self.tk_image = None
 
         self.create_widgets()
 
     def create_widgets(self):
         self.left_frame = Frame(self.master, bg="#181818")
-        self.right_frame = Frame(self.master, bg="#181818")
+        self.image_frame = Frame(self.master, bg="#333333") #Frame for camera feed
 
         self.master.grid_columnconfigure(0, weight=1)
         self.master.grid_columnconfigure(1, weight=1)
         self.master.grid_rowconfigure(0, weight=1)
 
         self.left_frame.grid(row=0, column=0, sticky="nsew")
-        self.right_frame.grid(row=0, column=1, sticky="nsew")
+        self.image_frame.grid(row=0, column=1, sticky="nsew") #Place the camera feed frame
 
         self.left_frame.grid_rowconfigure(0, weight=1)
         self.left_frame.grid_rowconfigure(1, weight=1)
         self.left_frame.grid_rowconfigure(2, weight=1)
         self.left_frame.grid_columnconfigure(0, weight=1)
 
-        self.right_frame.grid_rowconfigure(0, weight=1)
-        self.right_frame.grid_columnconfigure(0, weight=1)
-        self.right_frame.grid_columnconfigure(1, weight=1)
-        self.right_frame.grid_columnconfigure(2, weight=1)
+        self.image_frame.grid_rowconfigure(0, weight=1)
+        self.image_frame.grid_columnconfigure(0, weight=1)
 
         self.left_frame.grid_propagate(False)
-        self.right_frame.grid_propagate(False)
+        self.image_frame.grid_propagate(False)
 
         self.ros_label = Label(self.left_frame, text="Hello")
         self.send_button = Button(self.left_frame, text="Send", command=self.publish_on_topic)
@@ -57,10 +63,8 @@ class ROSGUI:
         self.y_entry.grid(row=0, column=1, sticky="sew", padx=5)
         self.z_entry.grid(row=0, column=2, sticky="sew", padx=5)
 
-        self.right_label = Label(self.right_frame, text="Right Side Content")
-        self.test_button = Button(self.right_frame, text="Test")
-        self.right_label.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
-        self.test_button.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
+        self.image_label = Label(self.image_frame) #Label to display the image
+        self.image_label.grid(row=0, column=0, sticky="nsew")
 
     def callback(self, msg):
         self.ros_label.config(text=msg.data)
@@ -70,6 +74,25 @@ class ROSGUI:
         self.x_entry.delete(0, 'end')
         self.y_entry.delete(0, 'end')
         self.z_entry.delete(0, 'end')
+
+    def image_callback(self, msg):
+        try:
+            cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
+            cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
+
+            img = PIL_Image.fromarray(cv_image)
+            img = ImageTk.PhotoImage(image=img)
+
+            # Update only the image, not the entire label
+            if self.tk_image is None:
+                self.tk_image = img
+                self.image_label.config(image=img)
+            else:
+                self.image_label.configure(image=img)
+                self.tk_image = img
+
+        except Exception as e:
+            print(f"Error converting image: {e}")
 
 if __name__ == "__main__":
     root = Tk()

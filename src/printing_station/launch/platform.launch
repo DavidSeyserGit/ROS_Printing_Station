@@ -1,12 +1,25 @@
 <launch>
     <!-- Spawn the first model -->
-    <group ns="robot">
+    <group ns="scara">
+        <param name="robot_description" command="$(find xacro)/xacro '$(find URDF_scara)/urdf/URDF_scara.urdf'"/>
+        <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
+              args="-urdf -param robot_description
+                        -x 2.0 -y 0.0 -z 0.0
+                        -Y 3.14
+                        -model scara"/>
+         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+              output="screen">
+            <remap from="robot_description" to="robot_description"/>
+        </node>
+    </group>
+
+    <group ns="knickarm">
         <param name="robot_description" command="$(find xacro)/xacro '$(find URDF_Knickarmroboter)/urdf/URDF_Knickarmroboter.urdf'"/>
         <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
               args="-urdf -param robot_description
                         -x 0.0 -y 0.0 -z 0.0
                         -Y 0.0
-                        -model robot"/>
+                        -model knickarm"/>
     </group>
 
     <!-- Spawn the printer model -->

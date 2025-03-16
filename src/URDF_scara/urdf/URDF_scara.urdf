@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="URDF_scara">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.00304253582378883 -3.24080029479035E-09 0.348016553898838"
+        rpy="0 0 0" />
+      <mass
+        value="140.664155119261" />
+      <inertia
+        ixx="6.21985341555057"
+        ixy="1.6177467469675E-09"
+        ixz="-0.0282733043567956"
+        iyy="6.16895115866181"
+        iyz="-6.39612769574178E-08"
+        izz="0.621036899279798" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDF_scara/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.647058823529412 0.619607843137255 0.588235294117647 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDF_scara/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="l1">
+    <inertial>
+      <origin
+        xyz="0.180580298915213 -1.72451675162222E-09 0.5628500514109"
+        rpy="0 0 0" />
+      <mass
+        value="10.3144084866883" />
+      <inertia
+        ixx="0.0342092246633679"
+        ixy="-2.99363172795375E-10"
+        ixz="-0.0121727037282381"
+        iyy="0.0788306764827712"
+        iyz="3.25101890063317E-09"
+        izz="0.078100864454537" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDF_scara/meshes/l1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDF_scara/meshes/l1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j1"
+    type="prismatic">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="l1" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l2">
+    <inertial>
+      <origin
+        xyz="0.464665381563986 -0.000533918957160928 0.663143302894101"
+        rpy="0 0 0" />
+      <mass
+        value="8.02143644200549" />
+      <inertia
+        ixx="0.0149565861523128"
+        ixy="0.000403547895616341"
+        ixz="-0.00584364916080405"
+        iyy="0.135000761450308"
+        iyz="1.96396179920279E-05"
+        izz="0.141074436407867" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDF_scara/meshes/l2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDF_scara/meshes/l2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j2"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="l1" />
+    <child
+      link="l2" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="l3">
+    <inertial>
+      <origin
+        xyz="0.734557385262792 -0.00674681244424247 0.603143304377357"
+        rpy="0 0 0" />
+      <mass
+        value="8.02143583413568" />
+      <inertia
+        ixx="0.015117442570311"
+        ixy="0.00440988755881666"
+        ixz="-0.00583973463893681"
+        iyy="0.134839889330191"
+        iyz="0.000214807697238278"
+        izz="0.141074421178462" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDF_scara/meshes/l3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDF_scara/meshes/l3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j3"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="l2" />
+    <child
+      link="l3" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+</robot>

@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: full_station
+    relative_path: urdf/full_station.urdf
+    xacro_args: ""
+  SRDF:
+    relative_path: config/full_station.srdf
+  CONFIG:
+    author_name: david
+    author_email: david@david.at
+    generated_timestamp: 1743619165

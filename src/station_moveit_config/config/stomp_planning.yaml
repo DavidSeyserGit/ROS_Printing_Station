@@ -1,5 +1,5 @@
-stomp/scara:
-  group_name: scara
+stomp/knick:
+  group_name: knick
   optimization:
     num_timesteps: 60
     num_iterations: 40
@@ -11,7 +11,7 @@ stomp/scara:
   task:
     noise_generator:
       - class: stomp_moveit/NormalDistributionSampling
-        stddev: [0.05, 0.05, 0.05]
+        stddev: [0.05, 0.05, 0.05, 0.05, 0.05, 0.05]
     cost_functions:
       - class: stomp_moveit/CollisionCheck
         collision_penalty: 1.0
@@ -37,8 +37,8 @@ stomp/scara:
         publish_intermediate: True
         marker_topic: stomp_trajectory
         marker_namespace: optimized
-stomp/knickarm:
-  group_name: knickarm
+stomp/scara:
+  group_name: scara
   optimization:
     num_timesteps: 60
     num_iterations: 40
@@ -50,7 +50,7 @@ stomp/knickarm:
   task:
     noise_generator:
       - class: stomp_moveit/NormalDistributionSampling
-        stddev: [0.05, 0.05, 0.05, 0.05]
+        stddev: [0.05, 0.05, 0.05]
     cost_functions:
       - class: stomp_moveit/CollisionCheck
         collision_penalty: 1.0

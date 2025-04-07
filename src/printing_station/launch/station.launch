@@ -1,7 +1,7 @@
 <launch>
     <!-- Include the empty world launch file -->
     <!--include file="$(find gazebo_ros)/launch/empty_world.launch"/-->
-    <include file="$(find scara_moveit_config)/launch/demo_gazebo.launch"/>
+    <include file="$(find station_moveit_config)/launch/demo_gazebo.launch"/>
     <node name="spawn_static_camera" pkg="gazebo_ros" type="spawn_model" args="-file $(find printing_station)/urdf/camera.sdf -sdf -model static_camera" output="screen"/>
     <!-- Launch the GUI talker node -->
     <node name="gui_talker" pkg="printing_station" type="picking_bot_talker"/>

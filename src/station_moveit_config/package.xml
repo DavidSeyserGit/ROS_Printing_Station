@@ -3,10 +3,10 @@
   <name>station_moveit_config</name>
   <version>0.3.0</version>
   <description>
-     An automatically generated package with all the configuration and launch files for using the full_station with the MoveIt Motion Planning Framework
+     An automatically generated package with all the configuration and launch files for using the fertig with the MoveIt Motion Planning Framework
   </description>
-  <author email="david@david.at">david</author>
-  <maintainer email="david@david.at">david</maintainer>
+  <author email="david@david.da">david</author>
+  <maintainer email="david@david.da">david</maintainer>
 
   <license>BSD</license>
 
@@ -35,7 +35,7 @@
   <!-- <run_depend>gazebo_ros_control</run_depend> -->
   <!-- This package is referenced in the warehouse launch files, but does not build out of the box at the moment. Commented the dependency until this works. -->
   <!-- <run_depend>warehouse_ros_mongo</run_depend> -->
-  <run_depend>full_station</run_depend>
+  <run_depend>fertig</run_depend>
 
 
 </package>

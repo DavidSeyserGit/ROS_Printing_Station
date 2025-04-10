@@ -1,4 +1,4 @@
-knick_controller:
+controller_knick:
   type: position_controllers/JointTrajectoryController
   joints:
     - knick_joint1
@@ -38,70 +38,8 @@ knick_controller:
       d: 1
       i: 1
       i_clamp: 1
-scara_controller:
+controller_scara:
   type: position_controllers/JointTrajectoryController
-  joints:
-    - scara_joint_1
-    - scara_joint_2
-    - scara_joint_3
-  gains:
-    scara_joint_1:
-      p: 100
-      d: 1
-      i: 1
-      i_clamp: 1
-    scara_joint_2:
-      p: 100
-      d: 1
-      i: 1
-      i_clamp: 1
-    scara_joint_3:
-      p: 100
-      d: 1
-      i: 1
-      i_clamp: 1
-knick_controller:
-  type: effort_controllers/JointTrajectoryController
-  joints:
-    - knick_joint1
-    - knick_joint2
-    - knick_joint3
-    - knick_joint4
-    - knick_joint5
-    - knick_joint6
-  gains:
-    knick_joint1:
-      p: 100
-      d: 1
-      i: 1
-      i_clamp: 1
-    knick_joint2:
-      p: 100
-      d: 1
-      i: 1
-      i_clamp: 1
-    knick_joint3:
-      p: 100
-      d: 1
-      i: 1
-      i_clamp: 1
-    knick_joint4:
-      p: 100
-      d: 1
-      i: 1
-      i_clamp: 1
-    knick_joint5:
-      p: 100
-      d: 1
-      i: 1
-      i_clamp: 1
-    knick_joint6:
-      p: 100
-      d: 1
-      i: 1
-      i_clamp: 1
-scara_controller:
-  type: effort_controllers/JointTrajectoryController
   joints:
     - scara_joint_1
     - scara_joint_2

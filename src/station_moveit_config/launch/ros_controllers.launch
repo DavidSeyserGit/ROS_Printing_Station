@@ -6,6 +6,6 @@
 
   <!-- Load the controllers -->
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-    output="screen" args="knick_controller scara_controller knick_controller scara_controller "/>
+    output="screen" args="controller_knick controller_scara "/>
 
 </launch>

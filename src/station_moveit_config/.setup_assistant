@@ -1,11 +1,11 @@
 moveit_setup_assistant_config:
   URDF:
-    package: fertig
-    relative_path: urdf/fertig.urdf
+    package: gesamt_station
+    relative_path: urdf/gesamt_station.urdf
     xacro_args: ""
   SRDF:
-    relative_path: config/fertig.srdf
+    relative_path: config/gesamt_station.srdf
   CONFIG:
-    author_name: david
-    author_email: david@david.da
-    generated_timestamp: 1744042426
+    author_name: dav
+    author_email: da@da.at
+    generated_timestamp: 1744271776

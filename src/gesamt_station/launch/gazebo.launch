@@ -1,6 +1,8 @@
 <launch>
-  <include
-    file="$(find gazebo_ros)/launch/empty_world.launch" />
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="physics" value="bullet"/>  <!-- Critical change -->
+    <arg name="verbose" value="true"/>
+  </include>
   <node
     name="tf_footprint_base"
     pkg="tf"

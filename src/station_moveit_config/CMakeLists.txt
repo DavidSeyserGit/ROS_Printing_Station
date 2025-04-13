@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1.3)
+cmake_minimum_required(VERSION 3.5...3.15)
 project(station_moveit_config)
 
 find_package(catkin REQUIRED)

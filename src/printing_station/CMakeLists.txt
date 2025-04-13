@@ -1,5 +1,5 @@
 # %Tag(FULLTEXT)%
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.5...3.15)
 project(printing_station)
 
 ## Find catkin and any catkin packages

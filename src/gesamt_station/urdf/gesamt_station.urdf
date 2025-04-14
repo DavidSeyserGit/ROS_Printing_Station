@@ -80,7 +80,8 @@
         <parent link="scara_link_base" />
         <child link="scara_link_1" />
         <axis xyz="0 0 -1" />
-        <limit lower="-2.5" upper="2.5" effort="0" velocity="0" />
+        <limit lower="-2.5" upper="2.5" effort="1000" velocity="20" />
+        <dynamics damping="1" friction="1" />
     </joint>
     <link name="scara_link_2">
         <inertial>
@@ -109,7 +110,8 @@
         <parent link="scara_link_1" />
         <child link="scara_link_2" />
         <axis xyz="0 0 -1" />
-        <limit lower="-2.5" upper="2.5" effort="0" velocity="0" />
+        <limit lower="-2.5" upper="2.5" effort="1000" velocity="20" />
+        <dynamics damping="1" friction="1" />
     </joint>
     <link name="scara_link_3">
         <inertial>
@@ -138,7 +140,8 @@
         <parent link="scara_link_2" />
         <child link="scara_link_3" />
         <axis xyz="0 0 -1" />
-        <limit lower="-2.5" upper="2.5" effort="0" velocity="0" />
+        <limit lower="-2.5" upper="2.5" effort="1000" velocity="20" />
+        <dynamics damping="1" friction="1" />
     </joint>
     <link name="boxes">
         <inertial>
@@ -251,7 +254,8 @@
         <parent link="knick_base_link" />
         <child link="knick_link1" />
         <axis xyz="0 0 1" />
-        <limit lower="-3" upper="3" effort="0" velocity="0" />
+        <limit lower="-3" upper="3" effort="1000" velocity="20" />
+        <dynamics damping="1" friction="1" />
     </joint>
     <link name="knick_link2">
         <inertial>
@@ -280,7 +284,8 @@
         <parent link="knick_link1" />
         <child link="knick_link2" />
         <axis xyz="0 0 1" />
-        <limit lower="-3" upper="3" effort="0" velocity="0" />
+        <limit lower="-3" upper="3" effort="1000" velocity="20" />
+        <dynamics damping="1" friction="1" />
     </joint>
     <link name="knick_link3">
         <inertial>
@@ -309,7 +314,8 @@
         <parent link="knick_link2" />
         <child link="knick_link3" />
         <axis xyz="0 0 1" />
-        <limit lower="-3" upper="3" effort="0" velocity="0" />
+        <limit lower="-3" upper="3" effort="1000" velocity="20" />
+        <dynamics damping="1" friction="1" />
     </joint>
     <link name="knick_link4">
         <inertial>
@@ -338,7 +344,8 @@
         <parent link="knick_link3" />
         <child link="knick_link4" />
         <axis xyz="0 0 1" />
-        <limit lower="-3" upper="3" effort="0" velocity="0" />
+        <limit lower="-3" upper="3" effort="1000" velocity="20" />
+        <dynamics damping="1" friction="1" />
     </joint>
     <link name="knick_link5">
         <inertial>
@@ -367,7 +374,8 @@
         <parent link="knick_link4" />
         <child link="knick_link5" />
         <axis xyz="0 0 1" />
-        <limit lower="-3" upper="3" effort="0" velocity="0" />
+        <limit lower="-3" upper="3" effort="1000" velocity="20" />
+        <dynamics damping="1" friction="1" />
     </joint>
     <link name="knick_link6">
         <inertial>
@@ -396,7 +404,8 @@
         <parent link="knick_link5" />
         <child link="knick_link6" />
         <axis xyz="0 0 1" />
-        <limit lower="-3" upper="3" effort="0" velocity="0" />
+        <limit lower="-3" upper="3" effort="1000" velocity="20" />
+        <dynamics damping="1" friction="1" />
     </joint>
     <link name="tisch">
         <inertial>
@@ -517,8 +526,12 @@
         </actuator>
     </transmission>
     <gazebo>
-        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-            <robotNamespace>/</robotNamespace>
+        <plugin name="control" filename="libgazebo_ros_control.so">
+        </plugin>
+    </gazebo>
+    <gazebo>
+        <plugin name = "joint_state_publisher" filename = "libgazebo_ros_joint_state_publisher.so" >
+		<jointName>scara_joint_1, scara_joint_2, scara_joint_3, knick_joint1, knick_joint2, knick_joint3, knick_joint4, knick_joint5, knick_joint6</jointName>
         </plugin>
     </gazebo>
 </robot>

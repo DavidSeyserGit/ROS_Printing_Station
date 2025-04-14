@@ -1,0 +1,7 @@
+<launch>
+    <include file="$(find printing_station)/launch/gazeboandcontroller.launch" />
+    <include file="$(find station_moveit_config)/launch/move_group.launch" />
+    <include file="$(find station_moveit_config)/launch/moveit_rviz.launch" >
+        <arg name="rviz_config" value="$(find station_moveit_config)/config/moveit.rviz"/>
+    </include>
+</launch>

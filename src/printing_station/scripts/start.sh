@@ -8,4 +8,4 @@ python3 src/gui/gui.py &
 # Launch the ROS launch file
 echo "Starting ROS launch..."
 # Replace 'your_ros_package' and 'your_launch_file.launch' with your actual package and launch file names
-roslaunch printing_station station.launch
+roslaunch printing_station run.launch

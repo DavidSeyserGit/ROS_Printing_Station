@@ -29,11 +29,14 @@ This project implements a robot station for automated 3D printing in a productio
 
 ## Build Instructions (ROS-specific)
 
-1. **ROS Environment:** Ensure you have a ROS environment set up with the required ROS distribution.
+1. **ROS Environment:** Ensure you have a ROS environment set up with the required ROS distribution
 2. **Dependencies:** Install the necessary ROS packages using `rosdep`:
 
    ```bash
    sudo apt-get update  # Update package list
    rosdep install --from-paths src --ignore-src -r -y
+   sudo apt-get install ros-noetic-joint-trajectory-controller
+   sudo apt-get install ros-noetic-robot-state-publisher
+   sudo apt-get install ros-noetic-moveit
 
 ## This is for a Course in the Master Robotics Engineering at UAS Technikum Wien

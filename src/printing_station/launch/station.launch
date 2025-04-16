@@ -1,8 +1,0 @@
-<launch>
-    <!-- Include the empty world launch file -->
-    <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
-    <include file="$(find printing_station)/launch/platform.launch"/>
-
-    <!-- Launch the GUI talker node -->
-    <node name="gui_talker" pkg="printing_station" type="inspection_talker_gui"/>
-</launch>

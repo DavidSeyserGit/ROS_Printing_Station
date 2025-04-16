@@ -1,0 +1,9 @@
+<launch>
+    <include file="$(find printing_station)/launch/gazeboandcontroller.launch" />
+    <include file="$(find station_moveit_config)/launch/move_group.launch" />
+    <include file="$(find station_moveit_config)/launch/moveit_rviz.launch" >
+        <arg name="rviz_config" value="$(find printing_station)/config/moveit.rviz"/>
+    </include>
+    <node name="spawn_static_camera" pkg="gazebo_ros" type="spawn_model" args="-file $(find printing_station)/urdf/camera.sdf -sdf -model static_camera" output="screen"/>
+    <node name="gui_talker" pkg="printing_station" type="picking_bot_talker"/>
+</launch>

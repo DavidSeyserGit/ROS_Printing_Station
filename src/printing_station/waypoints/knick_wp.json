@@ -1,0 +1,27 @@
+[
+    {
+      "position": [-0.4, 0, 0, 0, 0, 0],
+      "description": "Home position",
+      "pause": 0,
+      "action": null
+    },
+    {
+      "position": [0.4, 0, -0.1, 0, 0, 0],
+      "description": "Approach position",
+      "pause": 1,
+      "action": null
+    },
+    {
+      "position": [-0.4, 0, -0.2, 0, 0, 0],
+      "description": "Pickup position",
+      "pause": 1,
+      "action": "Simulating grabbing the object..."
+    },
+    {
+      "position": [-0.4, 0, -0.1, 0, 0, 0],
+      "description": "Lifting object",
+      "pause": 1,
+      "action": null
+    }
+  ]
+  

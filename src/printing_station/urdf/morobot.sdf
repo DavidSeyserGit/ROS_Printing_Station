@@ -4,18 +4,18 @@
             <visual name="conveyor_visual">
                 <geometry>
                     <box>
-                        <size>0.5 2.3 0.6</size>
+                        <size>0.1 0.1 0.1</size>
                     </box>
                 </geometry>
                 <material>
-                    <ambient>0.7 0 1 0.8</ambient>
-                    <diffuse>0.4 0 1 0.8</diffuse>
+                    <ambient>1 0 0.3 0.8</ambient>
+                    <diffuse>1 0 0.3 0.8</diffuse>
                 </material>
             </visual>
             <collision name="conveyor_collision">
                 <geometry>
                     <box>
-                        <size>0.5 2.3 0.6</size>
+                        <size>0.1 0.1 0.1</size>
                     </box>
                 </geometry>
             </collision>

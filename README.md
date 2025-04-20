@@ -7,20 +7,14 @@
 
 ## Overview
 
-This project implements a robot station for automated 3D printing in a production environment, leveraging the Robot Operating System (ROS) for seamless integration and control. The station integrates a vision detection system to optimize the printing process and enhance efficiency.  The core components of the station, all managed within the ROS framework, are:
+This project implements a simulation for robot station for automated 3D printing in a production environment.
 
-* **3D Printing:** 
-* **Robot Manipulation:** A robotic arm, controlled through ROS, is used to unload the printed objects from the printers.
+* **3D Printing:** We print MoRobots from the FH Technikum Wien
+* **Robot Manipulation:**
 * **Vision System:**
 
 ## Functional Description
 ![Flow Chart of the ROS Nodes](docs/flowchart/flowchart.png){ width=70% }
-
-
-## Hardware Components
-
-* **Robot Arm:** 
-* **Vision System:** 
 
 ## Software Components
 This Porject requires ROS Noetic to be install on your system. For a detailed guide on how to install ROS please use the ROS Wiki. [ROS-Wiki](https://wiki.ros.org/noetic/Installation)

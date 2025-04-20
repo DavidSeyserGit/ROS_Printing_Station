@@ -5,22 +5,29 @@
 ![ROS](https://img.shields.io/badge/ROS-Noetic-blue.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-## Overview
-
-This project implements a robot station for automated 3D printing in a production environment, leveraging the Robot Operating System (ROS) for seamless integration and control. The station integrates a vision detection system to optimize the printing process and enhance efficiency.  The core components of the station, all managed within the ROS framework, are:
-
-* **3D Printing:** 
-* **Robot Manipulation:** A robotic arm, controlled through ROS, is used to unload the printed objects from the printers.
-* **Vision System:**
-
+This project implements a simulation for robot station for automated 3D printing in a production environment.
 ## Functional Description
 ![Flow Chart of the ROS Nodes](docs/flowchart/flowchart.png){ width=70% }
 
+## Quick Start
+move to the repo and compile
 
-## Hardware Components
+   ```bash
+   cd ROS_Printing_Station
+   catkin_make -j16
+   ```
 
-* **Robot Arm:** 
-* **Vision System:** 
+to start the simulation run the following:
+
+   ```bash
+   ./scripts/start.sh
+   ```
+
+to move the robot start the move_robots python script
+
+   ```bash
+   python3 src/printing_station/scripts/move_robots
+   ```
 
 ## Software Components
 This Porject requires ROS Noetic to be install on your system. For a detailed guide on how to install ROS please use the ROS Wiki. [ROS-Wiki](https://wiki.ros.org/noetic/Installation)

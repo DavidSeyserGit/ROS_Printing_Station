@@ -3,7 +3,7 @@
 # Start the GUI application
 echo "Starting GUI..."
 # Replace 'your_gui_application' with the actual command to start your GUI
-python3 src/gui/gui.py &
+#python3 scripts/gui/gui.py &
 
 # Launch the ROS launch file
 echo "Starting ROS launch..."

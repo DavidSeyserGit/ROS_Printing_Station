@@ -1,5 +1,6 @@
 cv_bridge==1.16.2
+moveit_commander==1.1.16
 opencv_python==4.11.0.86
-Pillow==10.4
+Pillow==11.2.1
 rospy==1.17.0
 sensor_msgs==1.13.1

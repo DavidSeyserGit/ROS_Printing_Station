@@ -16,7 +16,7 @@ def spawn_urdf_model():
 
     # Get the path to the URDF file
     rospack = rospkg.RosPack()
-    urdf_path = rospack.get_path('printing_station') + '/urdf/morobot.sdf'
+    urdf_path = 'src/printing_station/urdf/morobot.sdf'
 
     # Read the URDF file
     with open(urdf_path, 'r') as urdf_file:
@@ -53,8 +53,8 @@ def move_model(x,y,z):
         new_pose.position.y = y  # Specify your desired y position
         new_pose.position.z = z  # Keep z appropriate as needed
 
-        new_pose.orientation.x = 0.0
-        new_pose.orientation.y = 0.0
+        new_pose.orientation.x = -0.4
+        new_pose.orientation.y = 1
         new_pose.orientation.z = 0.0
         new_pose.orientation.w = 1.0
 

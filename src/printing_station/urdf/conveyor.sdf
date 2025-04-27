@@ -1,5 +1,6 @@
 <sdf version="1.6">
     <model name="conveyor_belt">
+        <static>true</static>
         <link name="conveyor_link">
             <visual name="conveyor_visual">
                 <geometry>
@@ -31,6 +32,6 @@
                 </inertia>
             </inertial>
         </link>
-        <pose>-0.4 1.3 0 0 0 0</pose>
+        <pose>-0.4 1.3 0.2 0 0 0</pose>
     </model>
 </sdf>

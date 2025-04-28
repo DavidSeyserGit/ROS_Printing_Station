@@ -4,6 +4,9 @@ import rospy
 import moveit_commander
 from geometry_msgs.msg import Pose
 from gazebo_msgs.srv import SpawnModel, SpawnModelRequest
+from moveit_commander import PlanningSceneInterface
+from moveit_msgs.msg import AttachedCollisionObject
+from gazebo_msgs.msg import ContactsState
 from RobotMover import RobotMove, run_robot
 
 
@@ -38,22 +41,56 @@ def spawn_object(model_path, model_name, initial_pose):
         return False
 
 
+def contact_callback(msg, robot_link, object_name, planning_scene):
+    """Simple callback to check for contact and attach object"""
+    for contact in msg.states:
+        if ((robot_link in contact.collision1_name and object_name in contact.collision2_name) or
+            (robot_link in contact.collision2_name and object_name in contact.collision1_name)):
+            
+            rospy.loginfo(f"Contact detected between {robot_link} and {object_name}")
+            
+            # Attach the object
+            attached_object = AttachedCollisionObject()
+            attached_object.link_name = robot_link
+            attached_object.object.id = object_name
+            attached_object.touch_links = ['scara_link1', 'scara_link2', 'scara_link3', 'scara_link4']
+            
+            planning_scene.attach_object(attached_object)
+            rospy.loginfo(f"Object {object_name} attached to {robot_link}")
+            
+            # Unsubscribe after attachment
+            contact_sub.unregister()
+
+
 def main():
     rospy.init_node("gazebo_moveit_waypoints", anonymous=True)
     moveit_commander.roscpp_initialize([])
+    
+    # Initialize planning scene
+    planning_scene = PlanningSceneInterface()
     
     # 1. Spawn the object in Gazebo
     model_file = "src/printing_station/urdf/morobot.sdf"
     model_name = "object_model"
     target_pose = Pose()
-    target_pose.position.x = -0.3
-    target_pose.position.y = 0.65
+    target_pose.position.x = -0.32
+    target_pose.position.y = 0.62
     target_pose.position.z = 0.5
     target_pose.orientation.w = 1.0
 
     spawn_success = spawn_object(model_file, model_name, target_pose)
     
     rospy.sleep(1.0)  # Short pause to ensure model is fully loaded
+
+    # Set up contact monitoring
+    robot_link = "scara_link3"  # Change to your end effector link
+    global contact_sub
+    contact_sub = rospy.Subscriber(
+        '/gazebo/contact_states', 
+        ContactsState, 
+        callback=contact_callback,
+        callback_args=(robot_link, model_name, planning_scene)
+    )
 
     # 2. Use RobotMover to handle robot motion
     try:
@@ -68,6 +105,9 @@ def main():
         run_robot(scara_robot)
         
         rospy.loginfo("Completed executing waypoint motions.")
+        
+        # Keep node alive to maintain contact monitoring
+        rospy.spin()
     except Exception as e:
         rospy.logerr(f"Error in RobotMover execution: {e}")
 

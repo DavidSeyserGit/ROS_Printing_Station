@@ -41,27 +41,6 @@ def spawn_object(model_path, model_name, initial_pose):
         return False
 
 
-def contact_callback(msg, robot_link, object_name, planning_scene):
-    """Simple callback to check for contact and attach object"""
-    for contact in msg.states:
-        if ((robot_link in contact.collision1_name and object_name in contact.collision2_name) or
-            (robot_link in contact.collision2_name and object_name in contact.collision1_name)):
-            
-            rospy.loginfo(f"Contact detected between {robot_link} and {object_name}")
-            
-            # Attach the object
-            attached_object = AttachedCollisionObject()
-            attached_object.link_name = robot_link
-            attached_object.object.id = object_name
-            attached_object.touch_links = ['scara_link1', 'scara_link2', 'scara_link3', 'scara_link4']
-            
-            planning_scene.attach_object(attached_object)
-            rospy.loginfo(f"Object {object_name} attached to {robot_link}")
-            
-            # Unsubscribe after attachment
-            contact_sub.unregister()
-
-
 def main():
     rospy.init_node("gazebo_moveit_waypoints", anonymous=True)
     moveit_commander.roscpp_initialize([])
@@ -73,12 +52,15 @@ def main():
     model_file = "src/printing_station/urdf/morobot.sdf"
     model_name = "object_model"
     target_pose = Pose()
-    target_pose.position.x = -0.32
-    target_pose.position.y = 1
-    target_pose.position.z = 0.5
+    target_pose.position.x = -1
+    target_pose.position.y = 3
+    target_pose.position.z = 2
     target_pose.orientation.w = 1.0
 
-    # spawn_success = spawn_object(model_file, model_name, target_pose) # Uncomment if needed
+    try:
+        spawn_success = spawn_object(model_file, model_name, target_pose)
+    except:
+        pass
 
     rospy.sleep(1.0)
 
@@ -97,7 +79,11 @@ def main():
         move_group.set_num_planning_attempts(5)
         move_group.set_goal_joint_tolerance(0.01) # Set tolerance for joint goals
 
+        move_group.set_position_target(target_pose)
+
+
         #need to find a way to make this dynamic for each place the object spawns
+        """
         target_joint_waypoints = [
             [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],   
             [0.5, -0.3, 0.8, -1.2, 0.0, 0.0],   
@@ -105,7 +91,6 @@ def main():
             [0.7, -0.5, 1.0, -1.5, 0.0, 0.0],    
             [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]      
         ]
-
         for i, target_joints in enumerate(target_joint_waypoints):
             move_group.set_joint_value_target(target_joints)
 
@@ -122,7 +107,7 @@ def main():
                 break
 
         rospy.spin()
-
+        """
     except Exception as e:
         rospy.logerr(f"Error in MoveGroup execution or planning: {e}")
         # If an exception occurs, ensure MoveIt commander is shut down

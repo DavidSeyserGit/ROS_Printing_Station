@@ -92,38 +92,36 @@ def main():
     )
 
     try:
-            move_group = moveit_commander.MoveGroupCommander("knick")
-            move_group.set_planning_time(10.0) # Increase planning time if needed
-            move_group.set_num_planning_attempts(5)
-            move_group.set_goal_joint_tolerance(0.01) # Set tolerance for joint goals
+        move_group = moveit_commander.MoveGroupCommander("knick")
+        move_group.set_planning_time(10.0) # Increase planning time if needed
+        move_group.set_num_planning_attempts(5)
+        move_group.set_goal_joint_tolerance(0.01) # Set tolerance for joint goals
 
-            target_joint_waypoints = [
-                [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],   
-                [0.5, -0.3, 0.8, -1.2, 0.0, 0.0],   
-                [-0.2, 0.1, 0.5, -0.6, 0.0, 0.0],   
-                [0.7, -0.5, 1.0, -1.5, 0.0, 0.0],    
-                [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]      
-            ]
+        #need to find a way to make this dynamic for each place the object spawns
+        target_joint_waypoints = [
+            [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],   
+            [0.5, -0.3, 0.8, -1.2, 0.0, 0.0],   
+            [-0.2, 0.1, 0.5, -0.6, 0.0, 0.0],   
+            [0.7, -0.5, 1.0, -1.5, 0.0, 0.0],    
+            [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]      
+        ]
 
-            rospy.loginfo(f"Attempting to move through {len(target_joint_waypoints)} waypoints.")
+        for i, target_joints in enumerate(target_joint_waypoints):
+            move_group.set_joint_value_target(target_joints)
 
-            for i, target_joints in enumerate(target_joint_waypoints):
-                move_group.set_joint_value_target(target_joints)
+            rospy.loginfo(f"Planning motion to waypoint {i+1}")
+            plan_result = move_group.plan()
+            success = plan_result[0]
+            plan = plan_result[1]
 
-                rospy.loginfo(f"Planning motion to waypoint {i+1}")
-                plan_result = move_group.plan()
-                success = plan_result[0]
-                plan = plan_result[1]
+            if success:
+                move_group.execute(plan, wait=True)
+        
+            else:
+                rospy.logerr(f"Failed to plan motion to waypoint {i+1}.")
+                break
 
-                if success:
-                    move_group.execute(plan, wait=True)
-                    rospy.loginfo(f"Motion to waypoint {i+1} execution completed.")
-            
-                else:
-                    rospy.logerr(f"Failed to plan motion to waypoint {i+1}.")
-                    break
-
-            rospy.spin()
+        rospy.spin()
 
     except Exception as e:
         rospy.logerr(f"Error in MoveGroup execution or planning: {e}")
@@ -139,20 +137,6 @@ if __name__ == "__main__":
         rospy.logerr(f"Unexpected error: {e}")
     finally:
         moveit_commander.roscpp_shutdown()
-
-
-
-if __name__ == "__main__":
-    try:
-        main()
-    except rospy.ROSInterruptException:
-        rospy.loginfo("Program interrupted before completion")
-    except Exception as e:
-        rospy.logerr(f"Unexpected error: {e}")
-    finally:
-        moveit_commander.roscpp_shutdown()
-
-
 
     """
     scara_waypoints_file = "src/printing_station/waypoints/knick_wp.json"

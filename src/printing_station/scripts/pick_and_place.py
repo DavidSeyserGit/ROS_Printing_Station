@@ -65,51 +65,81 @@ def contact_callback(msg, robot_link, object_name, planning_scene):
 def main():
     rospy.init_node("gazebo_moveit_waypoints", anonymous=True)
     moveit_commander.roscpp_initialize([])
-    
+
     # Initialize planning scene
     planning_scene = PlanningSceneInterface()
-    
-    # 1. Spawn the object in Gazebo
+
+    # 1. Spawn the object in Gazebo (Uncomment if you need to spawn)
     model_file = "src/printing_station/urdf/morobot.sdf"
     model_name = "object_model"
     target_pose = Pose()
     target_pose.position.x = -0.32
-    target_pose.position.y = 0.62
+    target_pose.position.y = 1
     target_pose.position.z = 0.5
     target_pose.orientation.w = 1.0
 
-    spawn_success = spawn_object(model_file, model_name, target_pose)
-    
-    rospy.sleep(1.0)  # Short pause to ensure model is fully loaded
+    # spawn_success = spawn_object(model_file, model_name, target_pose) # Uncomment if needed
 
-    # Set up contact monitoring
-    robot_link = "scara_link3"  # Change to your end effector link
+    rospy.sleep(1.0)
+
+    robot_link = "scara_link3" 
     global contact_sub
     contact_sub = rospy.Subscriber(
-        '/gazebo/contact_states', 
-        ContactsState, 
+        '/gazebo/contact_states',
+        ContactsState,
         callback=contact_callback,
         callback_args=(robot_link, model_name, planning_scene)
     )
 
-    # 2. Use RobotMover to handle robot motion
     try:
-        scara_waypoints_file = "src/printing_station/waypoints/scara_wp.json"
-        scara_robot = RobotMove(
-            robot_name="scara",
-            move_group_name="scara",
-            waypoints_file=scara_waypoints_file,
-        )
+            move_group = moveit_commander.MoveGroupCommander("knick")
+            move_group.set_planning_time(10.0) # Increase planning time if needed
+            move_group.set_num_planning_attempts(5)
+            move_group.set_goal_joint_tolerance(0.01) # Set tolerance for joint goals
 
-        # Run the robot motion in the main thread since we don't need to do anything else
-        run_robot(scara_robot)
-        
-        rospy.loginfo("Completed executing waypoint motions.")
-        
-        # Keep node alive to maintain contact monitoring
-        rospy.spin()
+            target_joint_waypoints = [
+                [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],   
+                [0.5, -0.3, 0.8, -1.2, 0.0, 0.0],   
+                [-0.2, 0.1, 0.5, -0.6, 0.0, 0.0],   
+                [0.7, -0.5, 1.0, -1.5, 0.0, 0.0],    
+                [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]      
+            ]
+
+            rospy.loginfo(f"Attempting to move through {len(target_joint_waypoints)} waypoints.")
+
+            for i, target_joints in enumerate(target_joint_waypoints):
+                move_group.set_joint_value_target(target_joints)
+
+                rospy.loginfo(f"Planning motion to waypoint {i+1}")
+                plan_result = move_group.plan()
+                success = plan_result[0]
+                plan = plan_result[1]
+
+                if success:
+                    move_group.execute(plan, wait=True)
+                    rospy.loginfo(f"Motion to waypoint {i+1} execution completed.")
+            
+                else:
+                    rospy.logerr(f"Failed to plan motion to waypoint {i+1}.")
+                    break
+
+            rospy.spin()
+
     except Exception as e:
-        rospy.logerr(f"Error in RobotMover execution: {e}")
+        rospy.logerr(f"Error in MoveGroup execution or planning: {e}")
+        # If an exception occurs, ensure MoveIt commander is shut down
+        moveit_commander.roscpp_shutdown()
+        
+if __name__ == "__main__":
+    try:
+        main()
+    except rospy.ROSInterruptException:
+        rospy.loginfo("Program interrupted before completion")
+    except Exception as e:
+        rospy.logerr(f"Unexpected error: {e}")
+    finally:
+        moveit_commander.roscpp_shutdown()
+
 
 
 if __name__ == "__main__":
@@ -121,3 +151,17 @@ if __name__ == "__main__":
         rospy.logerr(f"Unexpected error: {e}")
     finally:
         moveit_commander.roscpp_shutdown()
+
+
+
+    """
+    scara_waypoints_file = "src/printing_station/waypoints/knick_wp.json"
+        scara_robot = RobotMove(
+            robot_name="knick",
+            move_group_name="knick",
+            waypoints_file=scara_waypoints_file,
+        )
+
+        # Run the robot motion in the main thread since we don't need to do anything else
+        run_robot(scara_robot)
+    """

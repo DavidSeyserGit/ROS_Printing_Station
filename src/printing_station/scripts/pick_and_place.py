@@ -94,9 +94,8 @@ def main():
         success = plan_result[0]
         plan = plan_result[1]
         
-        move_group.execute(plan, wait=True)
         if success:
-                move_group.execute(plan, wait=True)
+            move_group.execute(plan, wait=True)
         
         else:
             rospy.logerr(f"Failed to plan motion.")

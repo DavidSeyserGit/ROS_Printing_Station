@@ -7,4 +7,46 @@
     <node name="spawn_static_camera" pkg="gazebo_ros" type="spawn_model" args="-file $(find printing_station)/urdf/camera.sdf -sdf -model static_camera" output="screen"/>
     <node name="spawn_static_conveyor" pkg="gazebo_ros" type="spawn_model" args="-file $(find printing_station)/urdf/conveyor.sdf -sdf -model conveyor" output="screen"/>
 
+<!-- Spawn the first static fence at the specified position -->
+<node name="spawn_static_fence1" pkg="gazebo_ros" type="spawn_model" 
+    args="-file $(find printing_station)/urdf/fence.sdf -sdf -model fence1 -x 1.2 -y 1.5 -z 1.0" 
+    output="screen"/>
+
+<!-- Spawn the second static fence at the specified position -->
+<node name="spawn_static_fence2" pkg="gazebo_ros" type="spawn_model" 
+    args="-file $(find printing_station)/urdf/fence.sdf -sdf -model fence2 -x -1.7 -y 1.5 -z 1.0" 
+    output="screen"/>
+
+<!-- Spawn the third static fence (behind) at the specified position -->
+<node name="spawn_static_fence3" pkg="gazebo_ros" type="spawn_model" 
+    args="-file $(find printing_station)/urdf/fence_behind.sdf -sdf -model fence3 -x -0.25 -y 4 -z 1.0" 
+    output="screen"/>
+
+<!-- Spawn the first static laser at the specified position -->
+<node name="spawn_static_laser" pkg="gazebo_ros" type="spawn_model" 
+    args="-file $(find printing_station)/urdf/laser.sdf -sdf -model laser -x -1.7 -y -1.05 -z 1.0" 
+    output="screen"/>
+
+<!-- Spawn the second static laser at the specified position -->
+<node name="spawn_static_laser1" pkg="gazebo_ros" type="spawn_model" 
+    args="-file $(find printing_station)/urdf/laser.sdf -sdf -model laser1 -x 1.2 -y -1.05 -z 1.0" 
+    output="screen"/>
+
+<!-- Spawn the static laser beam at the specified position -->
+<node name="spawn_static_laserbeam" pkg="gazebo_ros" type="spawn_model" 
+    args="-file $(find printing_station)/urdf/laser_beam.sdf -sdf -model laserbeam -x -0.2 -y -1.05 -z 1.0" 
+    output="screen"/>
+
+<!-- Duplicate node: Spawn the static laser beam again at the same position -->
+<node name="spawn_static_laserbeam1" pkg="gazebo_ros" type="spawn_model" 
+    args="-file $(find printing_station)/urdf/laser_beam.sdf -sdf -model laserbeam1 -x -0.2 -y -1.05 -z 1.5" 
+    output="screen"/>
+
+<node name="spawn_static_laserbeam2" pkg="gazebo_ros" type="spawn_model" 
+    args="-file $(find printing_station)/urdf/laser_beam.sdf -sdf -model laserbeam2 -x -0.2 -y -1.05 -z 0.5" 
+    output="screen"/>
+
+<node name="spawn_static_laserbeam3" pkg="gazebo_ros" type="spawn_model" 
+    args="-file $(find printing_station)/urdf/laser_beam.sdf -sdf -model laserbeam3 -x -0.2 -y -1.05 -z 0.1" 
+    output="screen"/>
 </launch>

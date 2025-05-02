@@ -7,7 +7,6 @@
 
 This project implements a simulation for robot station for automated 3D printing in a production environment.
 ## Functional Description
-![Flow Chart of the ROS Nodes](docs/flowchart/flowchart.png){ width=70% }
 
 ## Quick Start
 move to the repo and compile
@@ -26,7 +25,7 @@ to start the simulation run the following:
 to move the robot start the move_robots python script
 
    ```bash
-   python3 src/printing_station/scripts/move_robots
+   python3 src/printing_station/scripts/pick_and_place.py
    ```
 
 ## Software Components

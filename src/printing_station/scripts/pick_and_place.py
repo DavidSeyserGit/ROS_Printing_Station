@@ -136,7 +136,7 @@ def main():
         )
 
         # Run the robot motion in the main thread since we don't need to do anything else
-        #run_robot(scara_robot) # Uncomment if you still want the scara arm to move
+        run_robot(scara_robot) # Uncomment if you still want the scara arm to move
 
 
         try:

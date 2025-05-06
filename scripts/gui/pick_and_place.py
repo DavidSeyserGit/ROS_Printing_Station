@@ -16,9 +16,6 @@ traget_pose_4 = [ -1, 2.5, 1.7, 0, 0, 0, 1]
 traget_pose_5 = [-0.5, 3.5, 1.7, 0, 0, 0, 1]
 drop_off_pose = [-0.4, 2.2, 0.9, 0, -0.707, 0, 0.707] # Renamed for clarity
 
-#target_index = 2
-target_index = random.randint(1, 5)
-
 # Define joint targets for the 'knick' arm corresponding to each traget_pose
 joint_target_1 = [-0.6, -0.57, -0.415, -1.25, 0.565, -0.631] 
 joint_target_2 = [-2.8, -0.2, -0.93, -0.53, 0.17, -1.5] 
@@ -59,6 +56,7 @@ def spawn_object(model_path, model_name, initial_pose):
 
 
 def main():
+    target_index = random.randint(1, 5)
     print (f"Target index chosen: {target_index}")
     #rospy.init_node("gazebo_moveit_waypoints", anonymous=True)
     moveit_commander.roscpp_initialize([])

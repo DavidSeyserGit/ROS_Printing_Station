@@ -3,7 +3,14 @@
      Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot name="gesamt_station">
-    <static>true</static>
+    <link name="world"/>
+
+    <joint name="virtual_joint" type="fixed">
+        <parent link="world"/>
+        <child link="world_link"/>
+        <origin rpy="0 0 0" xyz="0 0 0.05"/>
+    </joint>
+
     <link name="world_link">
         <inertial>
             <origin xyz="-0.379999991843833 -0.241999995946268 0.282642145469613" rpy="0 0 0" />

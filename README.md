@@ -14,6 +14,7 @@ move to the repo and compile
    ```bash
    cd ROS_Printing_Station
    catkin_make -j16
+   source /devel/setup.sh
    ```
 
 to start the simulation run the following:
@@ -21,13 +22,7 @@ to start the simulation run the following:
    ```bash
    ./scripts/start.sh
    ```
-
-to move the robot start the move_robots python script
-
-   ```bash
-   python3 src/printing_station/scripts/pick_and_place.py
-   ```
-
+   
 ## Software Components
 This Porject requires ROS Noetic to be install on your system. For a detailed guide on how to install ROS please use the ROS Wiki. [ROS-Wiki](https://wiki.ros.org/noetic/Installation)
 

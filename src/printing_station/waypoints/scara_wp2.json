@@ -1,0 +1,51 @@
+[
+    {
+      "position": [-0.4, 0, 0],
+      "description": "Home position",
+      "pause": 0,
+      "action": null
+    },
+    {
+      "position": [-0.4, 0, -0.1],
+      "description": "Approach position",
+      "pause": 1,
+      "action": null
+    },
+    {
+      "position": [-0.4, 0, -0.15],
+      "description": "Pickup position",
+      "pause": 1,
+      "action": "Simulating grabbing the object..."
+    },
+    {
+      "position": [-0.4, 0, -0.1],
+      "description": "Lifting object",
+      "pause": 1,
+      "action": null
+    },
+    {
+      "position": [-0.02, 0.44, -0.1],
+      "description": "Place approach position",
+      "pause": 1,
+      "action": null
+    },
+    {
+      "position": [-0.02, 0.44, -0.2],
+      "description": "Place position",
+      "pause": 1,
+      "action": "Simulating releasing the object..."
+    },
+    {
+      "position": [-0.02, 0.44, -0.1],
+      "description": "Moving up after placing",
+      "pause": 0,
+      "action": null
+    },
+    {
+      "position": [-0.4, 0, 0],
+      "description": "Returning to home position",
+      "pause": 0,
+      "action": null
+    }
+  ]
+  

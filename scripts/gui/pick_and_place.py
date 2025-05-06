@@ -16,12 +16,13 @@ traget_pose_4 = [ -1, 2.5, 1.7, 0, 0, 0, 1]
 traget_pose_5 = [-0.5, 3.5, 1.7, 0, 0, 0, 1]
 drop_off_pose = [-0.4, 2.2, 0.9, 0, -0.707, 0, 0.707] # Renamed for clarity
 
+#target_index = 2
 target_index = random.randint(1, 5)
 
 # Define joint targets for the 'knick' arm corresponding to each traget_pose
 joint_target_1 = [-0.6, -0.57, -0.415, -1.25, 0.565, -0.631] 
 joint_target_2 = [-2.8, -0.2, -0.93, -0.53, 0.17, -1.5] 
-joint_target_3 = [2.505, -0.25, -0.56, -1.164, 0.297, -0.233] 
+joint_target_3 = [2.75, -0.395, -0.66, -0.227, 0.126, 0] 
 joint_target_4 = [0.87, -0.43, -0.64, 0.872, 0.577, 0.857] 
 joint_target_5 = [-1.248, -0.142, -0.711, 0.8533, -0.16, 1.582] 
 
@@ -29,10 +30,8 @@ joint_target_5 = [-1.248, -0.142, -0.711, 0.8533, -0.16, 1.582]
 joint_target_drop_off = [1.4, -0.756, -0.954, -0.269, 0.735, -0.608] # Example joint values for drop off pose
 
 
+#spawning the placeholder object 
 def spawn_object(model_path, model_name, initial_pose):
-    """
-    Spawns an object into Gazebo using its SDF model.
-    """
     rospy.loginfo("Waiting for gazebo spawn service...")
     rospy.wait_for_service('/gazebo/spawn_sdf_model')
     try:
@@ -61,11 +60,8 @@ def spawn_object(model_path, model_name, initial_pose):
 
 def main():
     print (f"Target index chosen: {target_index}")
-    rospy.init_node("gazebo_moveit_waypoints", anonymous=True)
+    #rospy.init_node("gazebo_moveit_waypoints", anonymous=True)
     moveit_commander.roscpp_initialize([])
-    # Initialize planning scene
-    planning_scene = PlanningSceneInterface()
-
 
     # Spawn the object at one of the target locations randomly
     model_file = "src/printing_station/urdf/morobot.sdf"
@@ -113,7 +109,6 @@ def main():
             rospy.logerr(f"Failed to plan motion to joint target for traget_pose_{target_index}.")
 
 
-        # Set joint target for the drop off position
         rospy.loginfo("Moving 'knick' arm to joint target for drop off position.")
         move_group.set_joint_value_target(joint_target_drop_off)
         plan_result = move_group.plan()
@@ -127,16 +122,20 @@ def main():
         else:
             rospy.logerr(f"Failed to plan motion to joint target for drop off position.")
 
-        # Assuming you still want the scara arm to move after the knick arm
-        scara_waypoints_file = "src/printing_station/waypoints/scara_wp.json"
+        # Determine which waypoints file to use based on the random target index
+        if target_index % 2 == 0:
+            scara_waypoints_file = "/home/david/ROS_Printing_Station/src/printing_station/waypoints/scara_wp.json"
+        else:
+            scara_waypoints_file = "/home/david/ROS_Printing_Station/src/printing_station/waypoints/scara_wp2.json"
+
+        # Initialize the scara robot with the selected waypoints file
         scara_robot = RobotMove(
             robot_name="scara",
             move_group_name="scara",
             waypoints_file=scara_waypoints_file,
         )
 
-        # Run the robot motion in the main thread since we don't need to do anything else
-        run_robot(scara_robot) # Uncomment if you still want the scara arm to move
+        run_robot(scara_robot)
 
 
         try:
@@ -151,7 +150,6 @@ def main():
 
     except Exception as e:
         rospy.logerr(f"Error in MoveGroup execution or planning: {e}")
-        # If an exception occurs, ensure MoveIt commander is shut down
         moveit_commander.roscpp_shutdown()
 
 if __name__ == "__main__":
@@ -162,5 +160,4 @@ if __name__ == "__main__":
     except Exception as e:
         rospy.logerr(f"Unexpected error: {e}")
     finally:
-        # Ensure MoveIt commander is always shut down
         moveit_commander.roscpp_shutdown()

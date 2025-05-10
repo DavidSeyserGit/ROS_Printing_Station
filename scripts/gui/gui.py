@@ -20,8 +20,9 @@ class ROSGUI:
         rospy.init_node('gui', anonymous=True)
 
         rospy.Subscriber("/response", String, self.callback)
-        rospy.Subscriber("/error", String, self.error_callback)
-        rospy.Subscriber("/image_raw", Image, self.image_callback)
+        rospy.Subscriber("/static_camera/image_raw", Image, self.image_callback1)
+        rospy.Subscriber("/camera2/image_raw", Image, self.image_callback2)
+
         self.test_publisher = rospy.Publisher("/chatter", String, queue_size=10)
         self.bridge = CvBridge()
         self.tk_image1 = None
@@ -231,26 +232,27 @@ class ROSGUI:
         # Update the error label with the received error message
         self.error_label.config(text=f"Error: {msg.data}", fg="#ff6b6b", font=("Helvetica", 12, "bold"))
 
-    def image_callback(self, msg):
+    def image_callback1(self, msg):
         try:
             cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
-            # Convert from BGR to RGB for display
             cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
             img = PIL_Image.fromarray(cv_image)
-            
-            # Update both camera views with the same image (for now)
             img1 = ImageTk.PhotoImage(image=img)
-            img2 = ImageTk.PhotoImage(image=img)
-            
             self.image_label1.configure(image=img1)
-            self.image_label2.configure(image=img2)
-            
-            # Keep references to avoid garbage collection
             self.tk_image1 = img1
-            self.tk_image2 = img2
-            
         except Exception as e:
-            print(f"Error converting image: {e}")
+            print(f"Error converting image from camera 1: {e}")
+
+    def image_callback2(self, msg):
+        try:
+            cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
+            cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
+            img = PIL_Image.fromarray(cv_image)
+            img2 = ImageTk.PhotoImage(image=img)
+            self.image_label2.configure(image=img2)
+            self.tk_image2 = img2
+        except Exception as e:
+            print(f"Error converting image from camera 2: {e}")
 
     def start_robot(self):
         # Run the external routine on a separate thread to avoid blocking the GUI.

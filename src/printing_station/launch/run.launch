@@ -5,6 +5,7 @@
         <arg name="rviz_config" value="$(find printing_station)/config/moveit.rviz"/>
     </include>
     <node name="spawn_static_camera" pkg="gazebo_ros" type="spawn_model" args="-file $(find printing_station)/urdf/camera.sdf -sdf -model static_camera" output="screen"/>
+    <node name="spawn_static_camera2" pkg="gazebo_ros" type="spawn_model" args="-file $(find printing_station)/urdf/camera2.sdf -sdf -model camera2" output="screen"/>
     <node name="spawn_static_conveyor" pkg="gazebo_ros" type="spawn_model" args="-file $(find printing_station)/urdf/conveyor.sdf -sdf -model conveyor" output="screen"/>
 
 <!-- Spawn the first static fence at the specified position -->

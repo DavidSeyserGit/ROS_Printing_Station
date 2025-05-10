@@ -197,7 +197,7 @@ knick:
   projection_evaluator: joints(knick_joint1,knick_joint2)
   longest_valid_segment_fraction: 0.005
 scara:
-  default_planner_config: RRT
+  default_planner_config: STRIDE
   planner_configs:
     - AnytimePathShortening
     - SBL

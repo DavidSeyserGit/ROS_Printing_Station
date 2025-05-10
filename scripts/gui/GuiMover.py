@@ -4,6 +4,9 @@ import rospy
 import moveit_commander
 from std_msgs.msg import String
 
+status_pub = rospy.Publisher("response", String, queue_size=10)
+error_pub = rospy.Publisher("error", String, queue_size=10)
+
 def chatter_callback(message):
     try:
         #splitting the message in the corresponding tokens
@@ -24,7 +27,11 @@ def chatter_callback(message):
         joint_goal[2] = q3
         
         # WHY DOES GO WORK AND EXECUTE NOT???????
-        move_group.go(joint_goal, wait=True)
+        try:
+            move_group.go(joint_goal, wait=True)
+        except Exception as e:
+             status_pub.publish("red")
+             error_pub.publish(str(e))
         move_group.stop()
 
         rospy.loginfo("Motion executed successfully.")

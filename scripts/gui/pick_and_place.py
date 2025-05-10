@@ -8,6 +8,9 @@ from moveit_msgs.msg import AttachedCollisionObject
 from gazebo_msgs.msg import ContactsState
 from RobotMover import RobotMove, run_robot
 import random
+from std_msgs.msg import String
+
+pub = rospy.Publisher("response", String, queue_size=10)
 
 traget_pose_1 = [-1, 3, 1.7 , 0, 0, 0, 1]
 traget_pose_2 = [ 0.3, 3, 1.7 , 0, 0, 0, 1]
@@ -56,6 +59,7 @@ def spawn_object(model_path, model_name, initial_pose):
 
 
 def main():
+    pub.publish("yellow")
     target_index = random.randint(1, 5)
     print (f"Target index chosen: {target_index}")
     #rospy.init_node("gazebo_moveit_waypoints", anonymous=True)
@@ -105,6 +109,7 @@ def main():
             rospy.loginfo("'knick' arm reached the pick-up position.")
         else:
             rospy.logerr(f"Failed to plan motion to joint target for traget_pose_{target_index}.")
+            pub.publish("red")
 
 
         rospy.loginfo("Moving 'knick' arm to joint target for drop off position.")
@@ -119,6 +124,7 @@ def main():
             rospy.loginfo("'knick' arm reached the drop off position.")
         else:
             rospy.logerr(f"Failed to plan motion to joint target for drop off position.")
+            pub.publish("red")
 
         # Determine which waypoints file to use based on the random target index
         if target_index % 2 == 0:
@@ -144,13 +150,16 @@ def main():
                 rospy.loginfo(f"Successfully despawned {model_name}.")
         except rospy.ServiceException as e:
             rospy.logerr(f"Service call to delete model failed: {e}")
+            pub.publish("red")
 
 
     except Exception as e:
         rospy.logerr(f"Error in MoveGroup execution or planning: {e}")
+        pub.publish("red")
         moveit_commander.roscpp_shutdown()
-
+    pub.publish("green")
 if __name__ == "__main__":
+    pub = rospy.Publisher("response", String, queue_size=10)
     try:
         main()
     except rospy.ROSInterruptException:

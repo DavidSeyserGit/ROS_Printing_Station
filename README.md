@@ -1,5 +1,6 @@
 # Robot Station for 3D Printing with Vision Detection
 
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/DavidSeyserGit/ROS_Printing_Station)
 ![Python](https://img.shields.io/badge/Python-3.8-blue.svg)
 ![C++](https://img.shields.io/badge/C++-17-blue.svg)
 ![ROS](https://img.shields.io/badge/ROS-Noetic-blue.svg)
@@ -33,8 +34,8 @@ The GUI is written in Python, to include all neccesarry python packages please u
    pip install -r requirments.txt
    ```
 ## Known Issues
-Moving the Scara in the GUI is only possible with Joint Targets, not Poses
-
+The see the current open Issues please look at the issues tab
+[Open Issues](https://github.com/USERNAME/REPOSITORY/issues)
 
 ## Build Instructions (ROS-specific)
 

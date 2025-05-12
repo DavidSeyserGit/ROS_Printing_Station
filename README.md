@@ -7,7 +7,9 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 This project implements a simulation for robot station for automated 3D printing in a production environment.
-## Functional Description
+## Known Issues
+The see the current open Issues please look at the issues tab
+[Open Issues](https://github.com/USERNAME/REPOSITORY/issues)
 
 ## Quick Start
 move to the repo and compile
@@ -33,9 +35,6 @@ The GUI is written in Python, to include all neccesarry python packages please u
    ```bash
    pip install -r requirments.txt
    ```
-## Known Issues
-The see the current open Issues please look at the issues tab
-[Open Issues](https://github.com/USERNAME/REPOSITORY/issues)
 
 ## Build Instructions (ROS-specific)
 

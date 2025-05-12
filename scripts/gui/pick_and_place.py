@@ -4,11 +4,17 @@ import moveit_commander
 from geometry_msgs.msg import Pose
 from gazebo_msgs.srv import SpawnModel, SpawnModelRequest, DeleteModel
 from moveit_commander import PlanningSceneInterface
-from moveit_msgs.msg import AttachedCollisionObject
+from moveit_msgs.msg import AttachedCollisionObject, CollisionObject
+from shape_msgs.msg import SolidPrimitive
 from gazebo_msgs.msg import ContactsState
 from RobotMover import RobotMove, run_robot
 import random
 from std_msgs.msg import String
+
+
+move_group = moveit_commander.MoveGroupCommander("knick")
+move_group.stop()
+move_group.clear_pose_targets()
 
 pub = rospy.Publisher("response", String, queue_size=10)
 
@@ -58,6 +64,51 @@ def spawn_object(model_path, model_name, initial_pose):
         return False
 
 
+def attach_object_to_robot(move_group, object_name):
+    """Attach an object to the robot's end effector in the planning scene"""
+    planning_scene = PlanningSceneInterface()
+    
+    # Create a collision object representing our picked object
+    co = CollisionObject()
+    co.id = object_name
+    co.header.frame_id = move_group.get_planning_frame()
+    
+    # Define the object's shape (simple box for example)
+    primitive = SolidPrimitive()
+    primitive.type = primitive.BOX
+    primitive.dimensions = [0.1, 0.1, 0.1]  # Adjust size as needed
+    
+    # Define the pose (relative to the planning frame)
+    pose = Pose()
+    pose.position.x = 0.0
+    pose.position.y = 0.0
+    pose.position.z = 0.0
+    pose.orientation.w = 1.0
+    
+    co.primitives = [primitive]
+    co.primitive_poses = [pose]
+    co.operation = CollisionObject.ADD
+    
+    # Attach the collision object to the end effector
+    aco = AttachedCollisionObject()
+    aco.object = co
+    aco.link_name = move_group.get_end_effector_link()
+    aco.touch_links = [move_group.get_end_effector_link()]  # Touch links
+    
+    # Add the object to the planning scene and attach it
+    planning_scene.attach_object(aco)
+    rospy.loginfo(f"Object {object_name} attached to robot end effector")
+    return True
+
+
+def detach_object_from_robot(object_name):
+    """Detach the object from the robot's end effector"""
+    planning_scene = PlanningSceneInterface()
+    planning_scene.remove_attached_object("", object_name)
+    rospy.loginfo(f"Object {object_name} detached from robot end effector")
+    return True
+
+
 def main():
     pub.publish("yellow")
     target_index = random.randint(1, 5)
@@ -98,7 +149,7 @@ def main():
 
         # Set joint target for the pick-up position
         rospy.loginfo(f"Moving 'knick' arm to joint target for traget_pose_{target_index}")
-        move_group.set_joint_value_target(selected_joint_target)
+        move_group.set_joint_value_target(selected_joint_target) # goal joint poses
         plan_result = move_group.plan()
         success = plan_result[0]
         plan = plan_result[1]
@@ -107,6 +158,10 @@ def main():
             rospy.loginfo("Planning successful, executing motion.")
             move_group.execute(plan, wait=True)
             rospy.loginfo("'knick' arm reached the pick-up position.")
+            
+            # Attach the object to the robot after reaching the pick position
+            if 'spawn_success' in locals() and spawn_success:
+                attach_object_to_robot(move_group, model_name)
         else:
             rospy.logerr(f"Failed to plan motion to joint target for traget_pose_{target_index}.")
             pub.publish("red")
@@ -122,6 +177,10 @@ def main():
             rospy.loginfo("Planning successful, executing motion.")
             move_group.execute(plan, wait=True)
             rospy.loginfo("'knick' arm reached the drop off position.")
+            
+            # Detach the object at the drop-off location
+            if 'spawn_success' in locals() and spawn_success:
+                detach_object_from_robot(model_name)
         else:
             rospy.logerr(f"Failed to plan motion to joint target for drop off position.")
             pub.publish("red")

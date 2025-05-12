@@ -2,6 +2,7 @@
 import sys
 import rospy
 import moveit_commander
+import geometry_msgs.msg
 from std_msgs.msg import String
 
 status_pub = rospy.Publisher("response", String, queue_size=10)
@@ -9,52 +10,74 @@ error_pub = rospy.Publisher("error", String, queue_size=10)
 
 def chatter_callback(message):
     try:
-        #splitting the message in the corresponding tokens
-        #might be nice to use different message and not a string 
+        # Splitting the message into tokens
         tokens = message.data.strip().split()
         if len(tokens) < 6:
             rospy.logwarn("Unexpected message format: %s", message.data)
             return
 
-        q1 = float(tokens[1])
-        q2 = float(tokens[3])
-        q3 = float(tokens[5])
-        rospy.loginfo("Received target joint values: q1=%.2f, q2=%.2f, q3=%.2f", q1, q2, q3)
-        joint_goal = move_group.get_current_joint_values()
-
-        joint_goal[0] = q1
-        joint_goal[1] = q2
-        joint_goal[2] = q3
+        # Parse Cartesian coordinates from the message
+        # These coordinates are in the robot's base frame
+        x = float(tokens[1])
+        y = float(tokens[3])
+        z = float(tokens[5])
+        rospy.loginfo("Received target position in base frame: x=%.2f, y=%.2f, z=%.2f", x, y, z)
         
-        # WHY DOES GO WORK AND EXECUTE NOT???????
+        # Create a pose goal in the robot's base frame
+        pose_goal = geometry_msgs.msg.Pose()
+        pose_goal.position.x = x
+        pose_goal.position.y = y
+        pose_goal.position.z = z
+        
+        move_group.set_position_target([x, y, z])
+        
+        # Plan and execute
         try:
-            move_group.go(joint_goal, wait=True)
+            plan = move_group.plan()
+            
+            if isinstance(plan, tuple):
+                success = plan[0]
+                trajectory = plan[1]
+            else:
+                pass
+            
+            if success:
+                move_group.execute(trajectory, wait=True)
+                rospy.loginfo("Motion executed successfully.")
+                status_pub.publish("green")
+            else:
+                rospy.logerr("Planning failed")
+                status_pub.publish("red")
+                error_pub.publish("Planning failed")
         except Exception as e:
-             status_pub.publish("red")
-             error_pub.publish(str(e))
+            status_pub.publish("red")
+            error_pub.publish(str(e))
+            rospy.logerr("Error during execution: %s", e)
+        
         move_group.stop()
-
-        rospy.loginfo("Motion executed successfully.")
 
     except Exception as e:
         rospy.logerr("Error in processing message: %s", e)
+        status_pub.publish("red")
+        error_pub.publish(str(e))
 
 if __name__ == '__main__':
-
     moveit_commander.roscpp_initialize(sys.argv)
-    rospy.init_node('moveit_scara_controller', anonymous=True)
+    rospy.init_node('moveit_knick_controller', anonymous=True)
     
     robot = moveit_commander.RobotCommander()
     scene = moveit_commander.PlanningSceneInterface()
 
-    group_name = "scara"
+    group_name = "knick"
     move_group = moveit_commander.MoveGroupCommander(group_name)
 
-    rospy.loginfo("SCARA MoveIt controller initialized and waiting for joint commands on /chatter.")
+    rospy.loginfo("Knick MoveIt controller initialized and waiting for position commands on /chatter.")
 
     # Subscribe to the gui
-    # on callback we start the movement
     rospy.Subscriber("/chatter", String, chatter_callback)
     rospy.spin()
-
+    # Clean up
+    move_group.stop()
+    move_group.clear_pose_targets()
+    move_group.clear_path_constraints()
     moveit_commander.roscpp_shutdown()

@@ -1,0 +1,21 @@
+digraph G {
+"world_link" -> "boxes"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 11.387 sec old)\nBuffer length: 0.000 sec\n"];
+"world" -> "world_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 11.387 sec old)\nBuffer length: 0.000 sec\n"];
+"knickarm_sockel" -> "knick_base_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 11.387 sec old)\nBuffer length: 0.000 sec\n"];
+"world_link" -> "knickarm_sockel"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 11.387 sec old)\nBuffer length: 0.000 sec\n"];
+"world_link" -> "scara_link_base"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 11.387 sec old)\nBuffer length: 0.000 sec\n"];
+"world_link" -> "tisch"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 11.387 sec old)\nBuffer length: 0.000 sec\n"];
+"knick_base_link" -> "knick_link1"[label="Broadcaster: /robot_state_publisher\nAverage rate: 48.594 Hz\nMost recent transform: 11.383 ( 0.004 sec old)\nBuffer length: 4.980 sec\n"];
+"knick_link1" -> "knick_link2"[label="Broadcaster: /robot_state_publisher\nAverage rate: 48.594 Hz\nMost recent transform: 11.383 ( 0.004 sec old)\nBuffer length: 4.980 sec\n"];
+"knick_link2" -> "knick_link3"[label="Broadcaster: /robot_state_publisher\nAverage rate: 48.594 Hz\nMost recent transform: 11.383 ( 0.004 sec old)\nBuffer length: 4.980 sec\n"];
+"knick_link3" -> "knick_link4"[label="Broadcaster: /robot_state_publisher\nAverage rate: 48.594 Hz\nMost recent transform: 11.383 ( 0.004 sec old)\nBuffer length: 4.980 sec\n"];
+"knick_link4" -> "knick_link5"[label="Broadcaster: /robot_state_publisher\nAverage rate: 48.594 Hz\nMost recent transform: 11.383 ( 0.004 sec old)\nBuffer length: 4.980 sec\n"];
+"knick_link5" -> "knick_link6"[label="Broadcaster: /robot_state_publisher\nAverage rate: 48.594 Hz\nMost recent transform: 11.383 ( 0.004 sec old)\nBuffer length: 4.980 sec\n"];
+"scara_link_base" -> "scara_link_1"[label="Broadcaster: /robot_state_publisher\nAverage rate: 48.594 Hz\nMost recent transform: 11.383 ( 0.004 sec old)\nBuffer length: 4.980 sec\n"];
+"scara_link_1" -> "scara_link_2"[label="Broadcaster: /robot_state_publisher\nAverage rate: 48.594 Hz\nMost recent transform: 11.383 ( 0.004 sec old)\nBuffer length: 4.980 sec\n"];
+"scara_link_2" -> "scara_link_3"[label="Broadcaster: /robot_state_publisher\nAverage rate: 48.594 Hz\nMost recent transform: 11.383 ( 0.004 sec old)\nBuffer length: 4.980 sec\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 11.387"[ shape=plaintext ] ;
+ }->"world";
+}

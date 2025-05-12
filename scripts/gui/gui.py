@@ -234,6 +234,7 @@ class ROSGUI:
 
     def image_callback1(self, msg):
         try:
+            #opencv um bild anzuzeigen
             cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
             cv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
             img = PIL_Image.fromarray(cv_image)

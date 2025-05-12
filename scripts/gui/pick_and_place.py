@@ -128,9 +128,9 @@ def main():
 
         # Determine which waypoints file to use based on the random target index
         if target_index % 2 == 0:
-            scara_waypoints_file = "/home/david/ROS_Printing_Station/src/printing_station/waypoints/scara_wp.json"
+            scara_waypoints_file = "src/printing_station/waypoints/scara_wp.json"
         else:
-            scara_waypoints_file = "/home/david/ROS_Printing_Station/src/printing_station/waypoints/scara_wp2.json"
+            scara_waypoints_file = "src/printing_station/waypoints/scara_wp2.json"
 
         # Initialize the scara robot with the selected waypoints file
         scara_robot = RobotMove(

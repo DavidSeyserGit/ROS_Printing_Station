@@ -32,7 +32,9 @@ The GUI is written in Python, to include all neccesarry python packages please u
    ```bash
    pip install -r requirments.txt
    ```
-## ROS Nodes
+## Known Issues
+Moving the Scara in the GUI is only possible with Joint Targets, not Poses
+
 
 ## Build Instructions (ROS-specific)
 
@@ -46,5 +48,7 @@ The GUI is written in Python, to include all neccesarry python packages please u
    sudo apt-get install ros-noetic-robot-state-publisher
    sudo apt-get install ros-noetic-moveit
    ```
-   
+
+## Link to this repo 
+https://github.com/DavidSeyserGit/ROS_Printing_Station
 ## This is for a Course in the Master Robotics Engineering at UAS Technikum Wien

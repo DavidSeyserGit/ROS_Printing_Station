@@ -61,7 +61,6 @@ def spawn_object(model_path, model_name, initial_pose):
 
 
 def main():
-    
     client = actionlib.SimpleActionClient('/knick/follow_joint_trajectory', FollowJointTrajectoryAction)
     client.cancel_all_goals()
     
@@ -164,6 +163,9 @@ def main():
         pub.publish("red")
         moveit_commander.roscpp_shutdown()
     pub.publish("green")
+    
+    
+    
 if __name__ == "__main__":
     pub = rospy.Publisher("response", String, queue_size=10)
     try:

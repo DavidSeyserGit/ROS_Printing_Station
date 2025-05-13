@@ -11,6 +11,10 @@ def chatter_callback(message):
     try:
         #splitting the message in the corresponding tokens
         #might be nice to use different message and not a string 
+        
+        
+        # q1= 0.0, q2= 0.0, q3= 0.0
+        
         tokens = message.data.strip().split()
         if len(tokens) < 6:
             rospy.logwarn("Unexpected message format: %s", message.data)

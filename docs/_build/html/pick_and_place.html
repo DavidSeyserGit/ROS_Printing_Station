@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Pick and Place Module &#8212; ROS Printing Station 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Robot Mover Module" href="RobotMover.html" />
+    <link rel="prev" title="GUI Mover" href="GuiMover.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="pick-and-place-module">
+<h1>Pick and Place Module<a class="headerlink" href="#pick-and-place-module" title="Link to this heading">¶</a></h1>
+<p>This module (<cite>pick_and_place.py</cite>) orchestrates the automated pick-and-place operation for the ROS Printing Station. It involves spawning a placeholder object in Gazebo, moving the “knick” arm to grasp it (simulated by reaching a pre-defined pose), and then moving a SCARA arm along waypoints for the printing task, and finally despawning the object.</p>
+<section id="code-structure">
+<h2>Code Structure<a class="headerlink" href="#code-structure" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">rospy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">moveit_commander</span>
+<span class="c1"># ... other imports ...</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">RobotMover</span><span class="w"> </span><span class="kn">import</span> <span class="n">RobotMove</span><span class="p">,</span> <span class="n">run_robot</span> <span class="c1"># &lt;-- Imported from RobotMover</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">std_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">String</span>
+
+<span class="n">pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s2">&quot;response&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># ... pre-defined poses and joint targets ...</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">spawn_object</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">initial_pose</span><span class="p">):</span>
+    <span class="c1"># ... spawn object logic ...</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># ... main pick and place routine ...</span>
+    <span class="k">pass</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># ... initialization and execution ...</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</section>
+<section id="publishers">
+<h2>Publishers<a class="headerlink" href="#publishers" title="Link to this heading">¶</a></h2>
+<p>The module utilizes one ROS publisher:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pub</span></code> (<code class="docutils literal notranslate"><span class="pre">rospy.Publisher</span></code>, topic: <code class="docutils literal notranslate"><span class="pre">/response</span></code>, message type: <code class="docutils literal notranslate"><span class="pre">std_msgs.msg.String</span></code>): Publishes status updates (like “yellow”, “red”, “green”) back to the GUI to indicate the state of the pick-and-place process.</p></li>
+</ul>
+</section>
+<section id="pre-defined-poses-and-joint-targets">
+<h2>Pre-defined Poses and Joint Targets<a class="headerlink" href="#pre-defined-poses-and-joint-targets" title="Link to this heading">¶</a></h2>
+<p>The script defines several pre-configured poses and corresponding joint targets used during the pick-and-place sequence.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">traget_pose_1</span></code> to <code class="docutils literal notranslate"><span class="pre">traget_pose_5</span></code>: Cartesian poses (X, Y, Z, Quaternion) representing potential pick-up locations for the object.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">drop_off_pose</span></code>: A Cartesian pose representing the location where the object is notionally placed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">joint_target_1</span></code> to <code class="docutils literal notranslate"><span class="pre">joint_target_5</span></code>: Joint space configurations (for the “knick” arm) corresponding to reaching the respective <code class="docutils literal notranslate"><span class="pre">traget_pose_X</span></code> locations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">joint_target_drop_off</span></code>: A joint space configuration for the “knick” arm at the drop-off position.</p></li>
+</ul>
+</section>
+<section id="spawning-object-function-spawn-object">
+<h2>Spawning Object Function (<cite>spawn_object</cite>)<a class="headerlink" href="#spawning-object-function-spawn-object" title="Link to this heading">¶</a></h2>
+<p>This function handles the spawning of a specified SDF model into the Gazebo simulation environment.</p>
+<ul class="simple">
+<li><p><strong>Parameters:</strong>
+*   <code class="docutils literal notranslate"><span class="pre">model_path</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The file path to the SDF model file.
+*   <code class="docutils literal notranslate"><span class="pre">model_name</span></code> (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The desired name for the spawned model in Gazebo.
+*   <code class="docutils literal notranslate"><span class="pre">initial_pose</span></code> (<code class="docutils literal notranslate"><span class="pre">geometry_msgs.msg.Pose</span></code>): The initial pose (position and orientation) where the model should be spawned.</p></li>
+<li><p><strong>Functionality:</strong>
+*   Waits for the <code class="docutils literal notranslate"><span class="pre">/gazebo/spawn_sdf_model</span></code> service to be available.
+*   Reads the SDF model XML from the specified file.
+*   Calls the spawn service with the provided model name, XML, and initial pose.
+*   Logs success or failure of the spawning operation.</p></li>
+</ul>
+</section>
+<section id="main-execution-main">
+<h2>Main Execution (<cite>main</cite>)<a class="headerlink" href="#main-execution-main" title="Link to this heading">¶</a></h2>
+<p>This is the primary function that orchestrates the automated pick-and-place process. It is typically called by the GUI’s start routine.</p>
+<ul>
+<li><p><strong>Process Flow:</strong>
+1.  Publishes “yellow” to the <code class="docutils literal notranslate"><span class="pre">/response</span></code> topic to indicate the start of the process.
+2.  Randomly selects one of the five target pick-up locations (<code class="docutils literal notranslate"><span class="pre">traget_pose_1</span></code> to <code class="docutils literal notranslate"><span class="pre">traget_pose_5</span></code>).
+3.  Determines the corresponding initial pose for the object in Gazebo (slightly below the target pick-up pose).
+4.  Attempts to spawn the specified object model at the determined initial pose using the <code class="docutils literal notranslate"><span class="pre">spawn_object</span></code> function. Logs a warning if spawning fails.
+5.  Initializes the MoveIt! commander (if not already initialized by the ROS node).
+6.  Creates a <code class="docutils literal notranslate"><span class="pre">MoveGroupCommander</span></code> for the “knick” arm and configures planning parameters.
+7.  Sets the joint target for the “knick” arm to the selected pick-up joint configuration (corresponding to the randomly chosen target pose).
+8.  Plans and attempts to execute the motion for the “knick” arm to reach the pick-up position. Publishes “red” if planning fails.
+9.  Sets the joint target for the “knick” arm to the drop-off joint configuration.
+10. Plans and attempts to execute the motion for the “knick” arm to reach the drop-off position. Publishes “red” if planning fails.
+11. Selects the appropriate SCARA waypoints file (<cite>scara_wp.json</cite> or <cite>scara_wp2.json</cite>) based on whether the randomly chosen target index was even or odd.
+12. <strong>Initializes a robot control object:</strong></p>
+<blockquote>
+<div><p>Uses the <code class="xref py py-class docutils literal notranslate"><span class="pre">RobotMove</span></code> class from the <span class="xref std std-ref">RobotMover</span> to create an instance for controlling the “scara” arm with the selected waypoints file.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scara_robot</span> <span class="o">=</span> <span class="n">RobotMove</span><span class="p">(</span>
+    <span class="n">robot_name</span><span class="o">=</span><span class="s2">&quot;scara&quot;</span><span class="p">,</span>
+    <span class="n">move_group_name</span><span class="o">=</span><span class="s2">&quot;scara&quot;</span><span class="p">,</span>
+    <span class="n">waypoints_file</span><span class="o">=</span><span class="n">scara_waypoints_file</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic" start="13">
+<li><p><strong>Runs the SCARA routine:</strong>
+Calls the <code class="xref py py-func docutils literal notranslate"><span class="pre">run_robot()</span></code> helper function (also from the <span class="xref std std-ref">RobotMover</span>) to execute the waypoints defined in the selected file for the SCARA arm.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">run_robot</span><span class="p">(</span><span class="n">scara_robot</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>Attempts to delete the spawned object model from Gazebo using the <code class="docutils literal notranslate"><span class="pre">/gazebo/delete_model</span></code> service. Logs errors if despawning fails.</p></li>
+<li><p>Publishes “green” to the <code class="docutils literal notranslate"><span class="pre">/response</span></code> topic to indicate successful completion of the entire routine.</p></li>
+<li><p>Includes general error handling for issues during MoveIt! planning or execution.</p></li>
+</ol>
+</li>
+</ul>
+</section>
+<section id="main-execution-block">
+<h2>Main Execution Block<a class="headerlink" href="#main-execution-block" title="Link to this heading">¶</a></h2>
+<p>This block is executed when the script is run directly (though it’s typically called as a function from the GUI).</p>
+<ul class="simple">
+<li><p>Initializes the <code class="docutils literal notranslate"><span class="pre">pub</span></code> publisher (though it’s already initialized at the module level, which is slightly redundant).</p></li>
+<li><p>Calls the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function within a try-except block to catch potential ROS interrupt exceptions and other unexpected errors.</p></li>
+<li><p>Ensures <code class="docutils literal notranslate"><span class="pre">moveit_commander.roscpp_shutdown()</span></code> is called in a <code class="docutils literal notranslate"><span class="pre">finally</span></code> block to clean up MoveIt! resources when the script exits.</p></li>
+</ul>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">ROS Printing Station</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Documentation Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GuiMover.html">GUI Mover</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Pick and Place Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#code-structure">Code Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#publishers">Publishers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pre-defined-poses-and-joint-targets">Pre-defined Poses and Joint Targets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#spawning-object-function-spawn-object">Spawning Object Function (<cite>spawn_object</cite>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#main-execution-main">Main Execution (<cite>main</cite>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#main-execution-block">Main Execution Block</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="RobotMover.html">Robot Mover Module</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="GuiMover.html" title="previous chapter">GUI Mover</a></li>
+      <li>Next: <a href="RobotMover.html" title="next chapter">Robot Mover Module</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Seyser, Erdem.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/pick_and_place.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

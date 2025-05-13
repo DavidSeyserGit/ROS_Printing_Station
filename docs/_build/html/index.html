@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="Documentation for the ROS Printing Station project, a robot manipulation application for automated printing tasks." name="description" />
+<meta content="ROS, robot, manipulation, printing, automation, SCARA, MoveIt, Tkinter, GUI" name="keywords" />
+
+    <title>Welcome to the ROS Printing Station Documentation! &#8212; ROS Printing Station 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation Guide" href="installation.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="welcome-to-the-ros-printing-station-documentation">
+<h1>Welcome to the ROS Printing Station Documentation!<a class="headerlink" href="#welcome-to-the-ros-printing-station-documentation" title="Link to this heading">¶</a></h1>
+<p>This documentation provides comprehensive information about the ROS Printing Station project, a system designed to automate printing tasks using a robotic manipulator integrated with the Robot Operating System (ROS).</p>
+<section id="project-overview">
+<h2>Project Overview<a class="headerlink" href="#project-overview" title="Link to this heading">¶</a></h2>
+<p>The ROS Printing Station project aims to demonstrate and implement a robotic workcell capable of performing pick-and-place operations related to printing. Key aspects include:</p>
+<ul class="simple">
+<li><p><strong>Robot Control:</strong> Utilizing ROS and MoveIt! for robot motion planning and execution.</p></li>
+<li><p><strong>Perception:</strong> Incorporating camera feedback for task execution (e.g., identifying printing areas or paper).</p></li>
+<li><p><strong>Graphical User Interface (GUI):</strong> Providing a user-friendly interface for monitoring status, sending commands, and viewing camera feeds.</p></li>
+<li><p><strong>Automated Workflows:</strong> Implementing routines for automated printing tasks.</p></li>
+</ul>
+<p>Whether you’re a developer looking to contribute, a user wanting to understand how the system works, or just curious about ROS robotics, this documentation is your guide.</p>
+</section>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">¶</a></h2>
+<p>If you’re new to the project, we recommend starting with the <a class="reference internal" href="installation.html"><span class="doc">Installation Guide</span></a> guide to set up the necessary environment and dependencies.</p>
+<p>(Consider adding a diagram here if you have one!)</p>
+</section>
+<section id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Link to this heading">¶</a></h2>
+<p>Below is the table of contents, guiding you through the different sections of the documentation:</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Documentation Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#cloning-the-repository">Cloning the Repository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installing-dependencies">Installing Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#building-the-workspace">Building the Workspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#sourcing-the-setup-file">Sourcing the Setup File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#running-the-simulation">Running the Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#further-information">Further Information</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gui.html#rosgui-class">ROSGUI Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="GuiMover.html">GUI Mover</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="GuiMover.html#code-structure">Code Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GuiMover.html#publishers">Publishers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GuiMover.html#callback-function-chatter-callback">Callback Function (<cite>chatter_callback</cite>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GuiMover.html#main-execution-block">Main Execution Block</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pick_and_place.html">Pick and Place Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pick_and_place.html#code-structure">Code Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pick_and_place.html#publishers">Publishers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pick_and_place.html#pre-defined-poses-and-joint-targets">Pre-defined Poses and Joint Targets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pick_and_place.html#spawning-object-function-spawn-object">Spawning Object Function (<cite>spawn_object</cite>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pick_and_place.html#main-execution-main">Main Execution (<cite>main</cite>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pick_and_place.html#main-execution-block">Main Execution Block</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="RobotMover.html">Robot Mover Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="RobotMover.html#code-structure">Code Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="RobotMover.html#robotmove-class">RobotMove Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="RobotMover.html#helper-function-run-robot">Helper Function (<cite>run_robot</cite>)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">ROS Printing Station</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Documentation Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GuiMover.html">GUI Mover</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pick_and_place.html">Pick and Place Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RobotMover.html">Robot Mover Module</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="installation.html" title="next chapter">Installation Guide</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Seyser, Erdem.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

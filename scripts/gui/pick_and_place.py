@@ -9,6 +9,8 @@ from gazebo_msgs.msg import ContactsState
 from RobotMover import RobotMove, run_robot
 import random
 from std_msgs.msg import String
+import actionlib
+from control_msgs.msg import FollowJointTrajectoryAction
 
 pub = rospy.Publisher("response", String, queue_size=10)
 
@@ -59,6 +61,9 @@ def spawn_object(model_path, model_name, initial_pose):
 
 
 def main():
+    client = actionlib.SimpleActionClient('/knick/follow_joint_trajectory', FollowJointTrajectoryAction)
+    client.cancel_all_goals()
+    
     pub.publish("yellow")
     target_index = random.randint(1, 5)
     print (f"Target index chosen: {target_index}")
@@ -158,6 +163,9 @@ def main():
         pub.publish("red")
         moveit_commander.roscpp_shutdown()
     pub.publish("green")
+    
+    
+    
 if __name__ == "__main__":
     pub = rospy.Publisher("response", String, queue_size=10)
     try:

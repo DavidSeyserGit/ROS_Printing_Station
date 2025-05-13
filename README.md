@@ -48,7 +48,12 @@ The GUI is written in Python, to include all neccesarry python packages please u
    sudo apt-get install ros-noetic-robot-state-publisher
    sudo apt-get install ros-noetic-moveit
    ```
-
 ## Link to this repo 
 https://github.com/DavidSeyserGit/ROS_Printing_Station
+
+
+## Documenation
+To read the full documentation, please open the `documentation.pdf` file located in this repository.
+### Note on Documentation
+The documentation for this project was partially written with the assistance of AI tools to ensure clarity and completeness.
 ## This is for a Course in the Master Robotics Engineering at UAS Technikum Wien

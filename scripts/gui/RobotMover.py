@@ -10,16 +10,10 @@ import moveit_commander
 
 class RobotMove:
     def __init__(self, robot_name, move_group_name, waypoints_file):
-        """
-        Initialize the robot with a given namespace/robot name, move group name, and the
-        path to the waypoints JSON file.
-        """
         self.robot_name = robot_name
         self.move_group_name = move_group_name
         self.waypoints_file = waypoints_file
 
-        # Initialize moveit_commander and ROS node if not already initialized.
-        # Note: If using multiple robots, ensure each has a unique node name.
         if not rospy.core.is_initialized():
             rospy.init_node(f"{robot_name}_controller", anonymous=True)
 

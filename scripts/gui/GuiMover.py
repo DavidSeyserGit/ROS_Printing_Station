@@ -11,6 +11,10 @@ def chatter_callback(message):
     try:
         #splitting the message in the corresponding tokens
         #might be nice to use different message and not a string 
+        
+        
+        # q1= 0.0, q2= 0.0, q3= 0.0
+        
         tokens = message.data.strip().split()
         if len(tokens) < 6:
             rospy.logwarn("Unexpected message format: %s", message.data)
@@ -20,11 +24,7 @@ def chatter_callback(message):
         q2 = float(tokens[3])
         q3 = float(tokens[5])
         rospy.loginfo("Received target joint values: q1=%.2f, q2=%.2f, q3=%.2f", q1, q2, q3)
-        joint_goal = move_group.get_current_joint_values()
-
-        joint_goal[0] = q1
-        joint_goal[1] = q2
-        joint_goal[2] = q3
+        joint_goal = [q1, q2, q3]
         
         # WHY DOES GO WORK AND EXECUTE NOT???????
         try:
